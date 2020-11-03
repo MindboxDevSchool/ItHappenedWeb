@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import {registerUser} from '../Api/Api';
+import {loginUser} from '../Api/Api';
 import {Form, Button} from 'react-bootstrap';
 
-const RegistrationForm = () => {
+const Login = () => {
 
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
@@ -11,15 +11,11 @@ const RegistrationForm = () => {
     localStorage.setItem("token", token);
   }
 
-  const saveName = (name) => {
-    localStorage.setItem("login", name);
+  const logUserIn = async () => {
+    await loginUser(login, password, saveToken);
   }
 
-  const registrationUser = async () => {
-    await registerUser(login, password, saveToken, saveName);
-  }
-
-  return <Form onSubmit={e => {e.preventDefault();registrationUser();}}>
+  return <Form onSubmit={e => { e.preventDefault(); logUserIn(); }}>
           <Form.Group controlId="formBasicLogin">
             <Form.Label>Login</Form.Label>
             <Form.Control type="text" placeholder="Enter login" value={login} onChange={e => setLogin(e.target.value)}/>
@@ -29,13 +25,13 @@ const RegistrationForm = () => {
             <Form.Control type="password" placeholder="Enter password" value={password} onChange={e => setPassword(e.target.value)}/>
           </Form.Group>
           <Button variant="primary" type="submit">
-            Register
+            Sign In
           </Button>
         </Form>;
 
 }
 
-export default RegistrationForm;
+export default Login;
 
 
 

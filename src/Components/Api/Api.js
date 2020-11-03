@@ -11,23 +11,27 @@ export const getUserCredentials = () => (
 const authorizedRequestConfig = { headers: { Authorization: `Bearer ${getUserCredentials().token}` }};
 
 const instance = axios.create({
-  baseURL: apiBaseUrl
+  baseURL: apiBaseUrl,
 });
 
-export const createTracker = (trackerBody) => 
-    instance
-    .post(`/trackers`, trackerBody, authorizedRequestConfig);
-    // .then(result => result.data)
-    // .catch(error => console.log(error.response));
+export const createTracker = (trackerBody) =>
+  instance.post(`/trackers`, trackerBody, authorizedRequestConfig);
+// .then(result => result.data)
+// .catch(error => console.log(error.response));
 
- export const registerUser = (login, password, saveToken) => 
-    instance
-    .post(`/users`, {"userName":login,"password":password})
-    .then(result => saveToken(result.data.token))
-    .catch(error => console.log(error.response));   
+export const registerUser = (login, password, saveToken, saveName) =>
+  instance
+    .post(`/users`, { userName: login, password: password })
+    .then((result) => {saveToken(result.data.token); saveName(result.data.name)})
+    .catch((error) => console.log(error.response));
 
-    export const getTrackers = () =>
-      instance
-        .get(`/trackers`, authorizedRequestConfig);
+export const loginUser = (login, password, saveToken) =>
+  instance
+    .post(`/login`, { userName: login, password: password })
+    .then((result) => saveToken(result.data.token))
+    .catch((error) => console.log(error.response));
+
+export const getTrackers = () =>
+  instance.get(`/trackers`, authorizedRequestConfig);
 
 
