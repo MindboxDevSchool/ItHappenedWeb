@@ -19,7 +19,7 @@ const Tracker = () => {
       }, []);
 
     const addTracker = (tracker) => {
-        useState({...trackers, tracker})
+        setTrackers({...trackers, tracker})
     }  
 
     return (<div>
