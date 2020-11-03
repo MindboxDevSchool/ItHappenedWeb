@@ -1,4 +1,4 @@
-import {getTrackers} from '../Api/Api';
+import {getTrackers, createTracker} from '../Api/Api';
 import { useEffect, useState } from "react";
 import TrackerForm from '../TrackerForm/TrackerForm';
 import {ListGroup} from 'react-bootstrap';
@@ -18,9 +18,18 @@ const Tracker = () => {
         getTrackersAsync();
       }, []);
 
-    const addTracker = (tracker) => {
-        setTrackers({...trackers, tracker})
-    }  
+
+      const addTracker = async (name) => {
+        await createTracker({"name": name})
+            .then(result => { setId(result.data.id) })
+            .catch(error => console.log(error.response));
+
+        const createdTracker = {id: id, name: name};
+            setTrackers([...trackers, createdTracker]);   
+      }
+    // const addTracker = (tracker) => {
+    //     setTrackers({...trackers, tracker})
+    // }  
 
     return (<div>
         {
@@ -31,7 +40,7 @@ const Tracker = () => {
                     </ListGroup.Item>
                 </ListGroup>)
         }
-        <TrackerForm />
+        <TrackerForm onAdd={addTracker}/>
     </div>);
 }
 
