@@ -1,9 +1,11 @@
 import {getTrackers, createTracker, deleteTracker} from '../Api/Api';
 import { useEffect, useState } from "react";
 import TrackerForm from '../TrackerForm/TrackerForm';
-import {ListGroup, Table, Modal, Button, FormCheck} from 'react-bootstrap';
-import changeTracker from './icons/changeTracker.png';
+import {ListGroup, Table, Modal, Button, FormCheck, Form, FormControl} from 'react-bootstrap';
+import change from './icons/change.png';
+import deleteIcon from './icons/delete.png';
 import './Tracker.css';
+import { Link } from 'react-router-dom';
 
 const Tracker = () => {
     const [id, setId] = useState("");
@@ -24,10 +26,10 @@ const Tracker = () => {
       }, []);
 
 
-      const addTracker = async (name) => {
-        await createTracker({"name": name})
+      const addTracker = async (trackerBody) => {
+        await createTracker(trackerBody)
             .then(result => {         
-                const createdTracker = {id: result.data.id, name: name};
+                const createdTracker = {id: result.data.id, name: trackerBody.name};
                 setTrackers([...trackers, createdTracker]);   
             })
             .catch(error => console.log(error.response));
@@ -48,12 +50,13 @@ const Tracker = () => {
                 trackers.map(tracker => 
                     <tr id={tracker.id}>
                         <td className="firstCell">{i++}</td>
-                        <td className="secondCell"><a href={"tracker/" + tracker.id}>{tracker.name}</a></td>
+                        <td className="secondCell"><Link to={"tracker/" + tracker.id}>{tracker.name}</Link></td>
+                        <td><FormControl placeholder="enter new name" className="hiddenItem tableCellInput"/></td>
                         <td className="thirdCell">
-                            <img onClick={e => console.log(123)} src="https://img.icons8.com/color/48/000000/change.png" className="tableIcon"/>
+                            <img onClick={e => console.log(123)} src={change} className="tableIcon"/>
                         </td>
                         <td className="fourthCell">
-                            <img onClick={e => {setId(e.target.parentElement.parentElement.id);handleShow();}} src="https://img.icons8.com/flat_round/64/000000/delete-sign.png" className="tableIcon"/>
+                            <img onClick={e => {setId(e.target.parentElement.parentElement.id);handleShow();}} src={deleteIcon} className="tableIcon"/>
                         </td>
                     </tr>)
             }

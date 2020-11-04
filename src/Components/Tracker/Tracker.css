@@ -14,3 +14,15 @@
 .fourthCell {
     width: 20px;
 }
+
+.showItem {
+    visibility: visible;
+}
+
+.hiddenItem {
+    visibility: hidden;
+}
+
+.tableCellInput {
+    height: 25px;
+}
