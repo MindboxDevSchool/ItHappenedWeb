@@ -27,9 +27,6 @@ function Login () {
         setIsError(true);
       });
   };
-
-  console.log("isLoggedIn");
-  console.log(isLoggedIn);
   
   if (isLoggedIn) {
     return <Redirect to="/home" />;

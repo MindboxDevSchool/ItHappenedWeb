@@ -1,26 +1,21 @@
-
-import {Form, Button} from 'react-bootstrap';
+import React from "react";
+import {useAuth} from '../../Context/auth'
+import {Button} from 'react-bootstrap';
 
 const Logout = () => {
 
-  const logUserOut = () => {
-    localStorage.setItem("token", undefined);
-    localStorage.setItem("login", undefined);
+  const { setAuthToken } = useAuth();
+
+  function logUserOut() {
+    setAuthToken();
   }
 
-  return <Form onSubmit={e => { e.preventDefault(); logUserOut(); }}>
-          <Button variant="primary" type="submit">
+  return <div>
+          <Button variant="primary" type="submit" onClick =  { e => logUserOut() } >
             LogOut
           </Button>
-        </Form>;
+        </div>
 }
 
 export default Logout;
-
-
-
-
-
-  
-
- 
+//onClick =  { logUserOut.bind(this) }
