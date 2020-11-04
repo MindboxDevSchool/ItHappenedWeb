@@ -5,6 +5,7 @@ const Logout = () => {
 
   const logUserOut = () => {
     localStorage.setItem("token", undefined);
+    localStorage.setItem("login", undefined);
   }
 
   return <Form onSubmit={e => { e.preventDefault(); logUserOut(); }}>
