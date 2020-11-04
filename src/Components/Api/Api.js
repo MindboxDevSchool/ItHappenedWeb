@@ -30,4 +30,8 @@ export const createTracker = (trackerBody) =>
       instance
         .get(`/trackers`, authorizedRequestConfig);
 
+        export const deleteTracker = (id) => 
+        instance
+        .delete(`trackers/${id}`, authorizedRequestConfig);
+
 

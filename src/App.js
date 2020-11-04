@@ -3,7 +3,7 @@ import RegistrationForm from './Components/RegistrationForm/RegistrationForm';
 import Main from './Components/Main/Main';
 import {Navbar, Nav} from 'react-bootstrap';
 import { Route, Switch } from "react-router";
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, Link } from 'react-router-dom';
 import Tracker from './Components/Tracker/Tracker';
 import Events from './Components/Events/Events';
 

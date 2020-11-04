@@ -1,27 +1,23 @@
 import {useState} from 'react';
 import {createTracker} from '../Api/Api';
-import {Form,Button} from 'react-bootstrap';
+import {Form,Button, InputGroup, FormControl} from 'react-bootstrap';
 
 const TrackerForm = ({onAdd}) => {
   const [name, setName] = useState("");
   const [id, setId] = useState("");
-
-  // const addTracker = async () => {
-  //   await createTracker({"name": name})
-  //       .then(result => { setId(result.data.id) })
-  //       .catch(error => console.log(error.response));
-  // }
   
   return <Form onSubmit={e => {e.preventDefault(); onAdd(name); setName("");}}>
-          <Form.Group>
-            {/* <Form.Label>Tracker</Form.Label> */}
-            <Form.Control type="text" placeholder="Enter name for new tracker" value={name} onChange={e => setName(e.target.value)}/>
-          </Form.Group>
-          <Button variant="primary" type="submit">
-            Create
-          </Button>
+          <InputGroup>
+          <FormControl placeholder="Enter name for new tracker" value={name} onChange={e => setName(e.target.value)}/>
+          <InputGroup.Append>
+            <Button variant="outline-secondary">Add customization</Button>
+            <Button type="submit" variant="outline-secondary">Create</Button>
+          </InputGroup.Append>
+        </InputGroup>
           </Form>;
     }
    
 export default TrackerForm;
+
+
 
