@@ -1,10 +1,10 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { Redirect, Link } from "react-router-dom";
 import { loginUser } from "../Api/Api";
 import { Form, Button, Card } from "react-bootstrap";
 import { useAuth } from "../../Context/auth";
 
-function Login(props) {
+function Login() {
   const [isLoggedIn, setLoggedIn] = useState(false);
   const [isError, setIsError] = useState(false);
   const [login, setLogin] = useState("");
@@ -16,10 +16,7 @@ function Login(props) {
       .then((result) => {
         if (result.status === 200) {
           setAuthToken(result.data.token);
-          localStorage.setItem("token", result.data.token);
-          localStorage.setItem("login", result.data.name);
           setLoggedIn(true);
-          props.changeLoggedOutState(false);
         } else {
           setIsError(true);
         }

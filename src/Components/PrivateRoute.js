@@ -3,13 +3,13 @@ import { Route, Redirect } from "react-router-dom";
 import { useAuth } from "../Context/auth";
 
 function PrivateRoute({ component: Component, ...rest }) {
-  const { authToken } = useAuth();
-  
+  var { authToken } = useAuth();
+
   return (
     <Route
       {...rest}
-      render={ props =>
-        authToken ? (<Component {...props} />) : (<Redirect to="/login" />)
+      render={ (props) =>
+         authToken === 'undefined' || authToken === undefined ? (<Redirect to="/login" />) : (<Component {...props} />)
       }
     />
   );

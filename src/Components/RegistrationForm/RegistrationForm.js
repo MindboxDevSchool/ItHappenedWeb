@@ -4,7 +4,7 @@ import { Link, Redirect } from "react-router-dom";
 import { Form, Button, Card } from "react-bootstrap";
 import { useAuth } from "../../Context/auth";
 
-const RegistrationForm = (props) => {
+const RegistrationForm = () => {
   const [isLoggedIn, setLoggedIn] = useState(false);
   const [isError, setIsError] = useState(false);
   const [login, setLogin] = useState("");
@@ -16,10 +16,7 @@ const RegistrationForm = (props) => {
       .then((result) => {
         if (result.status === 200) {
           setAuthToken(result.data.token);
-          localStorage.setItem("token", result.data.token);
-          localStorage.setItem("login", result.data.name);
           setLoggedIn(true);
-          props.changeLoggedOutState(false);
         } else {
           setIsError(true);
         }

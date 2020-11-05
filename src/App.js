@@ -1,28 +1,26 @@
 import "./App.css";
 import React, { useState } from "react";
+import { BrowserRouter, Link } from "react-router-dom";
+import PrivateRoute from "./Components/PrivateRoute";
+import { Route, Switch } from "react-router";
 import RegistrationForm from "./Components/RegistrationForm/RegistrationForm";
 import Main from "./Components/Main/Main";
 import { Navbar, Nav } from "react-bootstrap";
-import { Route, Switch } from "react-router";
-import { BrowserRouter, Link } from "react-router-dom";
 import Tracker from "./Components/Tracker/Tracker";
 import Events from "./Components/Events/Events";
 import Login from "./Components/RegistrationForm/Login";
 import Logout from "./Components/RegistrationForm/Logout";
-import PrivateRoute from "./Components/PrivateRoute";
 import { AuthContext } from "./Context/auth";
 
 function App() {
-  const [authToken, setAuthToken] = useState(localStorage.getItem("token") || '') //или вот так useState()?? проблема при перезагрузке окна и до логина private route доступен;
-  const [isLoggedOut, setLoggedOut] = useState(true);
-
-  function handleChange(newValue) {
-    setLoggedOut(newValue);
-  }
+  const [authToken, setAuthToken] = useState(
+    localStorage.getItem("token") || ""
+  );
+  let isTokenDropped = authToken === "undefined" || authToken === undefined;
 
   const setToken = (data) => {
     localStorage.setItem("token", JSON.stringify(data));
-    setAuthToken(JSON.stringify(data));
+    setAuthToken(data);
   };
 
   return (
@@ -50,37 +48,20 @@ function App() {
           </Nav>
           <Nav className="collapse navbar-collapse justify-content-end">
             <Nav.Link>
-              {isLoggedOut && (
+              {isTokenDropped && (
                 <Link className="nav-link" to="/login">
                   LogIn
                 </Link>
               )}
             </Nav.Link>
 
-            <Nav.Link>
-              {!isLoggedOut && (
-                <Logout changeLoggedOutState={handleChange}>LogOut</Logout>
-              )}
-            </Nav.Link>
+            <Nav.Link>{!isTokenDropped && <Logout>LogOut</Logout>}</Nav.Link>
           </Nav>
         </Navbar>
         <Switch>
           <Route path="/home" component={Main} />
-          <Route
-            path="/registration"
-            render={(props) => (
-              <RegistrationForm
-                {...props}
-                changeLoggedOutState={handleChange}
-              />
-            )}
-          />
-          <Route
-            path="/login"
-            render={(props) => (
-              <Login {...props} changeLoggedOutState={handleChange} />
-            )}
-          />
+          <Route path="/registration" component={RegistrationForm} />
+          <Route path="/login" component={Login} />
           <Route path="/tracker/:id" component={Events} />
           <PrivateRoute path="/trackers" component={Tracker} />
         </Switch>

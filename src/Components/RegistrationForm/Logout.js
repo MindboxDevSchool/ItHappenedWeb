@@ -1,14 +1,14 @@
+import React from "react";
+import { useHistory } from "react-router-dom";
 import { useAuth } from "../../Context/auth";
 import { Button } from "react-bootstrap";
-import { useHistory } from "react-router-dom";
 
-const Logout = (props) => {
+const Logout = () => {
   const { setAuthToken } = useAuth();
   const history = useHistory();
 
   function logUserOut() {
     setAuthToken();
-    props.changeLoggedOutState(true);
   }
 
   const routeChange = () => {
