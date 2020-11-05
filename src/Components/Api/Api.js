@@ -28,3 +28,6 @@ export const loginUser = (login, password) =>
 
 export const getTrackers = () =>
   instance.get(`/trackers`, authorizedRequestConfig);
+  
+export const deleteTracker = (id) =>
+  instance.delete(`trackers/${id}`, authorizedRequestConfig);

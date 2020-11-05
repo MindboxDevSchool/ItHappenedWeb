@@ -1,0 +1,12 @@
+.buttonIcon {
+    width: 25px;
+    height: 25px;
+}
+
+.showItem {
+    visibility: visible;
+}
+
+.hiddenItem {
+    visibility: hidden;
+}
