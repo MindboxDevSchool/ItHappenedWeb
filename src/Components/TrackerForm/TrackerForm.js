@@ -60,13 +60,6 @@ const TrackerForm = ({onAdd}) => {
           <FormControl placeholder="Scale measurement" 
             disabled={!isScaleRequired} value={scaleMeasurementUnit} onChange={e => setScaleMeasurementUnit(e.target.value)}/>
         </InputGroup>
-        <Form.Control multiple as="select">
-      <option>1</option>
-      <option>2</option>
-      <option>3</option>
-      <option>4</option>
-      <option>5</option>
-    </Form.Control>
         </Form>;
     }
    
