@@ -20,17 +20,11 @@ export const createTracker = (trackerBody) =>
 // .then(result => result.data)
 // .catch(error => console.log(error.response));
 
-export const registerUser = (login, password, saveToken, saveName) =>
-  instance
-    .post(`/users`, { userName: login, password: password })
-    .then((result) => {
-      saveToken(result.data.token);
-      saveName(result.data.name);
-    })
-    .catch((error) => console.log(error.response));
+export const registerUser = (login, password) =>
+  instance.post(`/users`, { userName: login, password: password });
 
 export const loginUser = (login, password) =>
-  instance.post(`/login`, { userName: login, password: password })
+  instance.post(`/login`, { userName: login, password: password });
 
 export const getTrackers = () =>
   instance.get(`/trackers`, authorizedRequestConfig);
