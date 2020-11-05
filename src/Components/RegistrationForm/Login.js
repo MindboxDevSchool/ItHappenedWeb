@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { Redirect } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 import { loginUser } from "../Api/Api";
 import { Form, Button, Card } from "react-bootstrap";
 import { useAuth } from "../../Context/auth";
 
-function Login () {
+function Login(props) {
   const [isLoggedIn, setLoggedIn] = useState(false);
   const [isError, setIsError] = useState(false);
   const [login, setLogin] = useState("");
@@ -19,6 +19,7 @@ function Login () {
           localStorage.setItem("token", result.data.token);
           localStorage.setItem("login", result.data.name);
           setLoggedIn(true);
+          props.changeLoggedOutState(false);
         } else {
           setIsError(true);
         }
@@ -27,11 +28,11 @@ function Login () {
         setIsError(true);
       });
   };
-  
+
   if (isLoggedIn) {
     return <Redirect to="/home" />;
   }
-  
+
   return (
     <Card>
       <Form
@@ -62,9 +63,12 @@ function Login () {
           Sign In
         </Button>
       </Form>
-      { isError &&<span>The username or password provided were incorrect!</span> }
+      <Link to="/registration">Don't have an account?</Link>
+      {isError && (
+        <span>The username or password provided were incorrect!</span>
+      )}
     </Card>
   );
-};
+}
 
 export default Login;

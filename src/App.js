@@ -13,14 +13,16 @@ import PrivateRoute from "./Components/PrivateRoute";
 import { AuthContext } from "./Context/auth";
 
 function App() {
-  //const existingToken = getUserCredentials().token;
-  const [authToken, setAuthToken] = useState(
-    useState(localStorage.getItem("token") || "")
-  );
+  const [authToken, setAuthToken] = useState(localStorage.getItem("token") || '') //или вот так useState()?? проблема при перезагрузке окна и до логина private route доступен;
+  const [isLoggedOut, setLoggedOut] = useState(true);
+
+  function handleChange(newValue) {
+    setLoggedOut(newValue);
+  }
 
   const setToken = (data) => {
     localStorage.setItem("token", JSON.stringify(data));
-    setAuthToken(data);
+    setAuthToken(JSON.stringify(data));
   };
 
   return (
@@ -47,30 +49,38 @@ function App() {
             </Nav>
           </Nav>
           <Nav className="collapse navbar-collapse justify-content-end">
-            {authToken === undefined && (
-              <Nav.Link>
-                <Link className="nav-link" to="/login">LogIn</Link>
-              </Nav.Link>
-            )}
-            {authToken !== undefined && (
-              <Nav>
-                <Nav.Item className="text-white mt-3">
-                  <span>You logged in as: {localStorage.getItem("login")}</span> 
-                </Nav.Item>
-                <Nav.Link>
-                  <Link className="nav-link" to="/logout">
-                    LogOut
-                  </Link>
-                </Nav.Link>
-              </Nav>
-            )}
+            <Nav.Link>
+              {isLoggedOut && (
+                <Link className="nav-link" to="/login">
+                  LogIn
+                </Link>
+              )}
+            </Nav.Link>
+
+            <Nav.Link>
+              {!isLoggedOut && (
+                <Logout changeLoggedOutState={handleChange}>LogOut</Logout>
+              )}
+            </Nav.Link>
           </Nav>
         </Navbar>
         <Switch>
           <Route path="/home" component={Main} />
-          <Route path="/registration" component={RegistrationForm} />
-          <Route path="/login" component={Login} />
-          <Route path="/logout" component={Logout} />
+          <Route
+            path="/registration"
+            render={(props) => (
+              <RegistrationForm
+                {...props}
+                changeLoggedOutState={handleChange}
+              />
+            )}
+          />
+          <Route
+            path="/login"
+            render={(props) => (
+              <Login {...props} changeLoggedOutState={handleChange} />
+            )}
+          />
           <Route path="/tracker/:id" component={Events} />
           <PrivateRoute path="/trackers" component={Tracker} />
         </Switch>
