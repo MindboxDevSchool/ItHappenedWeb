@@ -18,9 +18,9 @@ function App() {
   );
   let isTokenDropped = authToken === "undefined" || authToken === undefined;
 
-  const setToken = (data) => {
-    localStorage.setItem("token", JSON.stringify(data));
-    setAuthToken(data);
+  const setToken = (token) => {
+    localStorage.setItem("token", token);
+    setAuthToken(token);
   };
 
   return (

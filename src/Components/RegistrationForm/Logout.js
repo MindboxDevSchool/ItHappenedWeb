@@ -20,7 +20,7 @@ const Logout = () => {
       <Button
         variant="primary"
         type="submit"
-        onClick={(e) => (logUserOut(), routeChange())}
+        onClick={(e) => {logUserOut(); routeChange()}}
       >
         LogOut
       </Button>

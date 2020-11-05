@@ -1,72 +1,91 @@
-import {getTrackers, createTracker, deleteTracker} from '../Api/Api';
+import { getTrackers, createTracker, deleteTracker } from "../Api/Api";
 import { useEffect, useState } from "react";
-import TrackerForm from '../TrackerForm/TrackerForm';
-import {ListGroup, Table, Modal, Button, FormCheck, Form, FormControl} from 'react-bootstrap';
-import change from './icons/change.png';
-import deleteIcon from './icons/delete.png';
-import './Tracker.css';
-import { Link } from 'react-router-dom';
-import TrackerRow from '../TrackerRow/TrackerRow';
+import TrackerForm from "../TrackerForm/TrackerForm";
+import {
+  ListGroup,
+  Table,
+  Modal,
+  Button,
+  FormCheck,
+  Form,
+  FormControl,
+} from "react-bootstrap";
+import change from "./icons/change.png";
+import deleteIcon from "./icons/delete.png";
+import "./Tracker.css";
+import { Link } from "react-router-dom";
+import TrackerRow from "../TrackerRow/TrackerRow";
 
 const Tracker = () => {
-    const [id, setId] = useState("");
-    const [trackers, setTrackers] = useState([]);
-    const [show, setShow] = useState(false);
-    const [isChanging, setChanging] = useState(false);
+  const [id, setId] = useState("");
+  const [trackers, setTrackers] = useState([]);
+  const [show, setShow] = useState(false);
+  const [isChanging, setChanging] = useState(false);
 
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
-    
-    useEffect(() => {
-        
-        const getTrackersAsync = async () => {
-            getTrackers()
-            .then(result =>  setTrackers(result.data))
-            .catch(e => console.log(e))
-        }
-        getTrackersAsync();
-      }, []);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
+  useEffect(() => {
+    const getTrackersAsync = async () => {
+      await getTrackers()
+        .then((result) => setTrackers(result.data))
+        .catch((e) => console.log(e));
+    };
+    getTrackersAsync();
+  }, []);
 
-      const addTracker = async (trackerBody) => {
-        await createTracker(trackerBody)
-            .then(result => {       
-                trackerBody.id = result.data.id;
-                setTrackers([...trackers, trackerBody]);   
-            })
-            .catch(error => console.log(error.response));
-      }
+  const addTracker = async (trackerBody) => {
+    await createTracker(trackerBody)
+      .then((result) => {
+        trackerBody.id = result.data.id;
+        setTrackers([...trackers, trackerBody]);
+      })
+      .catch((error) => console.log(error.response));
+  };
 
-      const onDeleteTracker = async () => {
-        console.log(trackers);
-        console.log(id)
+  const onDeleteTracker = async () => {
+    console.log(trackers);
+    console.log(id);
 
-          await deleteTracker(id)         
-          .then(result => {setTrackers(trackers.filter((e) => e.id != id))})
-          .catch(error => console.log(error.response))
+    await deleteTracker(id)
+      .then((result) => {
+        setTrackers(trackers.filter((e) => e.id != id));
+      })
+      .catch((error) => console.log(error.response));
 
-          console.log(trackers);
-      }
+    console.log(trackers);
+  };
 
-    let i = 1;
+  let i = 1;
 
-    const showModal = (trackerId) => {
-        setId(trackerId);
-        handleShow();
-    }
+  const showModal = (trackerId) => {
+    setId(trackerId);
+    handleShow();
+  };
 
-    return (<div><br />
-        <Table striped  hover variant="dark">
+  return (
+    <div>
+      <br />
+      <Table striped hover variant="dark">
         <tbody>
-            {              
-               trackers.map(tracker => <TrackerRow rowNumber={i++} tracker={tracker} showModal={showModal}/>)
-            }
+          {trackers.map((tracker) => (
+            <TrackerRow
+              rowNumber={i++}
+              tracker={tracker}
+              showModal={showModal}
+            />
+          ))}
         </tbody>
-        </Table>
-        
-        <TrackerForm onAdd={addTracker}/>
+      </Table>
 
-        <Modal show={show} onHide={handleClose} backdrop="static" keyboard={false} >
+      <TrackerForm onAdd={addTracker} />
+
+      <Modal
+        show={show}
+        onHide={handleClose}
+        backdrop="static"
+        keyboard={false}
+      >
         <Modal.Body>
           Do you really want to delete a track? Data cannot be recovered
         </Modal.Body>
@@ -74,21 +93,22 @@ const Tracker = () => {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="danger" onClick={e => {onDeleteTracker();handleClose();}}>Delete</Button>
+          <Button
+            variant="danger"
+            onClick={(e) => {
+              onDeleteTracker();
+              handleClose();
+            }}
+          >
+            Delete
+          </Button>
         </Modal.Footer>
       </Modal>
-
-        </div>)
-        }
+    </div>
+  );
+};
 
 export default Tracker;
-
-
-
-
-
-
-
 
 // import {getTrackers, createTracker, deleteTracker} from '../Api/Api';
 // import { useEffect, useState } from "react";
@@ -106,9 +126,9 @@ export default Tracker;
 
 //     const handleClose = () => setShow(false);
 //     const handleShow = () => setShow(true);
-    
+
 //     useEffect(() => {
-        
+
 //         const getTrackersAsync = async () => {
 //             getTrackers()
 //             .then(result =>  setTrackers(result.data))
@@ -117,12 +137,11 @@ export default Tracker;
 //         getTrackersAsync();
 //       }, []);
 
-
 //       const addTracker = async (trackerBody) => {
 //         await createTracker(trackerBody)
-//             .then(result => {         
+//             .then(result => {
 //                 const createdTracker = {id: result.data.id, name: trackerBody.name};
-//                 setTrackers([...trackers, createdTracker]);   
+//                 setTrackers([...trackers, createdTracker]);
 //             })
 //             .catch(error => console.log(error.response));
 //       }
@@ -138,8 +157,8 @@ export default Tracker;
 //     return (<div><br />
 //         <Table striped  hover variant="dark">
 //         <tbody>
-//             {               
-//                 trackers.map(tracker => 
+//             {
+//                 trackers.map(tracker =>
 //                     <tr id={tracker.id}>
 //                         <td className="firstCell">{i++}</td>
 //                         <td className="secondCell"><Link to={"tracker/" + tracker.id}>{tracker.name}</Link></td>
@@ -155,7 +174,7 @@ export default Tracker;
 
 //         </tbody>
 //         </Table>
-        
+
 //         <TrackerForm onAdd={addTracker}/>
 
 //         <Modal show={show} onHide={handleClose} backdrop="static" keyboard={false} >
