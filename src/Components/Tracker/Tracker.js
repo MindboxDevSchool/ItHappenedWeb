@@ -1,12 +1,7 @@
 import { getTrackers, createTracker, deleteTracker } from "../Api/Api";
 import { useEffect, useState } from "react";
 import TrackerForm from "../TrackerForm/TrackerForm";
-import {
-  Table,
-  Modal,
-  Button,
-} 
-from "react-bootstrap";
+import { Table, Modal, Button } from "react-bootstrap";
 import "./Tracker.css";
 import TrackerRow from "../TrackerRow/TrackerRow";
 
@@ -14,7 +9,6 @@ const Tracker = () => {
   const [id, setId] = useState("");
   const [trackers, setTrackers] = useState([]);
   const [show, setShow] = useState(false);
-  const [isChanging, setChanging] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -42,16 +36,11 @@ const Tracker = () => {
   };
 
   const onDeleteTracker = async () => {
-    console.log(trackers);
-    console.log(id);
-
     await deleteTracker(id, authorizedRequestConfig)
       .then((result) => {
         setTrackers(trackers.filter((e) => e.id != id));
       })
       .catch((error) => console.log(error.response));
-
-    console.log(trackers);
   };
 
   let i = 1;
