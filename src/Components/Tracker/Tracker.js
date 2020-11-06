@@ -9,10 +9,10 @@ import { Link } from 'react-router-dom';
 import TrackerRow from '../TrackerRow/TrackerRow';
 
 const Tracker = () => {
+
     const [id, setId] = useState("");
     const [trackers, setTrackers] = useState([]);
     const [show, setShow] = useState(false);
-    const [isChanging, setChanging] = useState(false);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -38,14 +38,11 @@ const Tracker = () => {
       }
 
       const onDeleteTracker = async () => {
-        console.log(trackers);
-        console.log(id)
 
           await deleteTracker(id)         
           .then(result => {setTrackers(trackers.filter((e) => e.id != id))})
           .catch(error => console.log(error.response))
-
-          console.log(trackers);
+          
       }
 
     let i = 1;

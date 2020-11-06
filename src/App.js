@@ -21,7 +21,7 @@ function App() {
         <Switch>
            <Route path="/home" component={Main} />
            <Route path="/registration" component={RegistrationForm} />
-           <Route path="/tracker/:id" component={Events} />
+           <Route path="/tracker/:trackerId" component={Events} />
            <Route path="/trackers" component={Tracker} />
        </Switch>
     </BrowserRouter>
