@@ -40,6 +40,16 @@ function App() {
                 </Link>
               </Nav.Link>
               <Nav.Link>
+                <Link className="nav-link" to="/events">
+                Events
+                </Link>
+              </Nav.Link>
+              <Nav.Link>
+                <Link className="nav-link" to="/filtration">
+                  Filtration
+                </Link>
+              </Nav.Link>
+              <Nav.Link>
                 <Link className="nav-link" to="/statistics">
                   Statistics
                 </Link>
