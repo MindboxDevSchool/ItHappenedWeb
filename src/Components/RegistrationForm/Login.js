@@ -1,8 +1,26 @@
 import React, { useState } from "react";
 import { Redirect, Link } from "react-router-dom";
+import { Formik } from "formik";
+import * as yup from "yup";
 import { loginUser } from "../Api/Api";
-import { Form, Button, Card } from "react-bootstrap";
+import { Form, Button, Card, Alert, NavLink} from "react-bootstrap";
 import { useAuth } from "../../Context/auth";
+
+const PASSWORD_PATTERN = /^(?=.*?[A-Za-z])(?=.*?[0-9]).{8,32}$/;
+const reqdFieldMsg = "This is a required field";
+const invalidPwdMsg =
+  "Password must contain atleast eight characters, at least one letter and one number.";
+
+const schema = yup.object({
+  login: yup
+    .string()
+    .required(reqdFieldMsg)
+    .min(5, "Must be 5 characters or more"),
+  password: yup
+    .string()
+    .matches(PASSWORD_PATTERN, invalidPwdMsg)
+    .required(reqdFieldMsg),
+});
 
 function Login() {
   const [isLoggedIn, setLoggedIn] = useState(false);
@@ -31,40 +49,80 @@ function Login() {
   }
 
   return (
-    <Card>
-      <Form
-        onSubmit={(e) => {
-          e.preventDefault();
-          postLogin();
+    <>
+      <Formik
+        validationSchema={schema}
+        validateOnChange={true}
+        onSubmit={postLogin}
+        initialValues={{
+          login: "",
+          password: "",
         }}
       >
-        <Form.Group controlId="formBasicLogin">
-          <Form.Label>Login</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Enter login"
-            value={login}
-            onChange={(e) => setLogin(e.target.value)}
-          />
-        </Form.Group>
-        <Form.Group controlId="formBasicPassword">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            type="password"
-            placeholder="Enter password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </Form.Group>
-        <Button variant="primary" type="submit">
-          Sign In
-        </Button>
-      </Form>
-      <Link to="/registration">Don't have an account?</Link>
-      {isError && (
-        <span>The username or password provided were incorrect!</span>
-      )}
-    </Card>
+        {({
+          handleSubmit,
+          handleChange,
+          handleBlur,
+          values,
+          touched,
+          errors,
+        }) => {
+          return (
+            <Card>
+              <Form noValidate onSubmit={handleSubmit}>
+                <Form.Group controlId="formBasicLogin">
+                  <Form.Label>Login</Form.Label>
+                  <Form.Control
+                    id="login"
+                    type="text"
+                    name="login"
+                    placeholder="Please enter your login"
+                    value={values.login}
+                    onBlur={handleBlur}
+                    onChange={(e) => setLogin(e.target.value), handleChange}
+                    isInvalid={errors.login}
+                  />
+                  {touched.login && (
+                    <Form.Control.Feedback type="invalid">
+                      {errors.login}
+                    </Form.Control.Feedback>
+                  )}
+                </Form.Group>
+                <Form.Group controlId="formBasicPassword">
+                  <Form.Label>Password</Form.Label>
+                  <Form.Control
+                    id="password"
+                    type="password"
+                    name="password"
+                    placeholder="Please enter a strong password"
+                    value={values.password}
+                    onBlur={handleBlur}
+                    onChange={(e) => setPassword(e.target.value), handleChange}
+                    isInvalid={errors.password}
+                  />
+                  {touched.password && (
+                    <Form.Control.Feedback type="invalid">
+                      {errors.password}
+                    </Form.Control.Feedback>
+                  )}
+                </Form.Group>
+                <Button variant="primary" type="submit">
+                  Sign In
+                </Button>
+              </Form>
+              <NavLink>
+                <Link to="/registration">Don't have an account?</Link>
+              </NavLink>
+              {isError && (
+                <Alert variant="info">
+                  The login or password provided were incorrect!
+                </Alert>
+              )}
+            </Card>
+          );
+        }}
+      </Formik>
+    </>
   );
 }
 
