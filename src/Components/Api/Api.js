@@ -7,15 +7,11 @@ export const getUserCredentials = () => ({
   token: localStorage.getItem("token"),
 });
 
-const authorizedRequestConfig = {
-  headers: { Authorization: `Bearer ${getUserCredentials().token}` },
-};
-
 const instance = axios.create({
   baseURL: apiBaseUrl,
 });
 
-export const createTracker = (trackerBody) =>
+export const createTracker = (trackerBody, authorizedRequestConfig) =>
   instance.post(`/trackers`, trackerBody, authorizedRequestConfig);
 // .then(result => result.data)
 // .catch(error => console.log(error.response));
@@ -26,8 +22,8 @@ export const registerUser = (login, password) =>
 export const loginUser = (login, password) =>
   instance.post(`/login`, { userName: login, password: password });
 
-export const getTrackers = () =>
+export const getTrackers = (authorizedRequestConfig) =>
   instance.get(`/trackers`, authorizedRequestConfig);
   
-export const deleteTracker = (id) =>
+export const deleteTracker = (id, authorizedRequestConfig) =>
   instance.delete(`trackers/${id}`, authorizedRequestConfig);
