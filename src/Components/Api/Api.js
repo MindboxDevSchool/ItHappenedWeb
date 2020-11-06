@@ -26,6 +26,9 @@ export const getTrackers = (authorizedRequestConfig) =>
 export const deleteTracker = (id, authorizedRequestConfig) =>
   instance.delete(`trackers/${id}`, authorizedRequestConfig);
 
+export const getTracker = (trackerId, authorizedRequestConfig) =>
+  instance.get(`/trackers/${trackerId}`, authorizedRequestConfig);
+
 export const getEvents = (trackerId, authorizedRequestConfig) =>
   instance.get(`/trackers/${trackerId}/events`, authorizedRequestConfig);
 
