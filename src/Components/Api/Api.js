@@ -13,8 +13,6 @@ const instance = axios.create({
 
 export const createTracker = (trackerBody, authorizedRequestConfig) =>
   instance.post(`/trackers`, trackerBody, authorizedRequestConfig);
-// .then(result => result.data)
-// .catch(error => console.log(error.response));
 
 export const registerUser = (login, password) =>
   instance.post(`/users`, { userName: login, password: password });
@@ -24,6 +22,16 @@ export const loginUser = (login, password) =>
 
 export const getTrackers = (authorizedRequestConfig) =>
   instance.get(`/trackers`, authorizedRequestConfig);
-  
+
 export const deleteTracker = (id, authorizedRequestConfig) =>
   instance.delete(`trackers/${id}`, authorizedRequestConfig);
+
+export const getEvents = (trackerId, authorizedRequestConfig) =>
+  instance.get(`/trackers/${trackerId}/events`, authorizedRequestConfig);
+
+export const addEvent = (trackerId, eventBody, authorizedRequestConfig) =>
+  instance.post(
+    `/trackers/${trackerId}/events`,
+    eventBody,
+    authorizedRequestConfig
+  );
