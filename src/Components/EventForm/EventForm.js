@@ -4,6 +4,7 @@ import submit from './icons/submit.png';
 import './EventForm.css';
 import  { DateTimePicker,MuiPickersUtilsProvider }  from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/moment';
+import { Formik } from "formik";
 
 
 const EventForm = ({onAdd, tracker}) => {
@@ -34,7 +35,7 @@ const EventForm = ({onAdd, tracker}) => {
 
     return <Form onSubmit=
             {e => {e.preventDefault(); onAdd(
-              {"comment": comment, 
+              {"comment": comment ? comment : null, 
                 "scale": scale ? Number(scale) : null,
                 "rating": rating ? Number(rating) : null,
                 "happensDate" : selectedDate,
@@ -43,26 +44,37 @@ const EventForm = ({onAdd, tracker}) => {
 
                 <Form.Row>
                     {
-                        isScaleRequired ?            
-                            <Col xs={1}>
-                                <Form.Control placeholder="Scale" value={scale} onChange={e => setScale(e.target.value)}/>
+                        (isCustomizationRequired && isScaleRequired) || !isCustomizationRequired ?            
+                            <Col xs={2}>
+                                <Form.Control required={isCustomizationRequired && isScaleRequired} 
+                                    placeholder="Scale" value={scale} onChange={e => setScale(e.target.value)}/>
                             </Col> : null
                     }
-
-                    <Col xs={2}>
-                    <Form.Control placeholder="Rating" value={rating} onChange={e => setRating(e.target.value)}/>
-                    </Col>
+                    {
+                        (isCustomizationRequired && isRatingRequired) || !isCustomizationRequired ? 
+                        <Col>
+                            <Form.Control placeholder="Rating" required={isCustomizationRequired && isRatingRequired} 
+                                value={rating} onChange={e => setRating(e.target.value)}/>
+                        </Col> : null
+                    }
+                    {
+                        (isCustomizationRequired && isCommentRequired) || !isCustomizationRequired ?
+                        <Col>
+                            <Form.Control placeholder="Comment" required={isCustomizationRequired && isCommentRequired} 
+                                value={comment} onChange={e => setComment(e.target.value)}/>
+                        </Col> : null
+                    }
+                    {
+                        (isCustomizationRequired && isPhotoRequired) || !isCustomizationRequired ?
+                        <Col>
+                            <Form.File label="Photo" lang="en" custom type="file" required={isCustomizationRequired && isPhotoRequired}
+                                onChange={e => toBase64(e.target.files[0])}/>
+                        </Col> : null
+                    }
                     <Col>
-                    <Form.Control placeholder="Comment" value={comment} onChange={e => setComment(e.target.value)}/>
-                    </Col>
-                    <Col>
-                        <Form.File label="Photo" lang="en" custom type="file"  
-                            onChange={e => toBase64(e.target.files[0])}/>
-                    </Col>
-                    <Col xs={4}>
-                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                        <DateTimePicker value={selectedDate} onChange={handleDateChange} />
-                    </MuiPickersUtilsProvider>
+                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                            <DateTimePicker value={selectedDate} onChange={handleDateChange} />
+                        </MuiPickersUtilsProvider>
                     </Col>
                     <Button type="submit" variant="outline-secondary" className="submitButton">
                         <img src={submit} className="buttonIcon"/>

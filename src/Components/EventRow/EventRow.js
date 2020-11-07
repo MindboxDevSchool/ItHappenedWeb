@@ -5,6 +5,7 @@ import ratingIcon from './icons/rating.png';
 import scaleIcon from './icons/scale.png';
 import locationIcon from './icons/location.png';
 import './EventRow.css';
+import timetable from './icons/timetable.png'
 
 const EventRow = ({rowNumber, event, showModal, tracker}) => {
     
@@ -25,20 +26,27 @@ const EventRow = ({rowNumber, event, showModal, tracker}) => {
         <tr>
         <td className="rowNumber">{rowNumber}</td>
                     {
-                        isScaleRequired ? <td className="scaleCell">{scale}<img src={scaleIcon} className="tableIcon"/></td> : null
+                        (isCustomizationRequired && isScaleRequired) || !isCustomizationRequired ? 
+                            <td className="scaleCell">{scale}{scaleMeasurementUnit}<img src={scaleIcon} className="tableIcon"/></td> : null
                     }
                     {
-                        isRatingRequired ? <td className="ratingCell">{rating}<img src={ratingIcon} className="tableIcon"/></td> : null
+                        (isCustomizationRequired && isRatingRequired) || !isCustomizationRequired ? 
+                            <td className="ratingCell">{rating}<img src={ratingIcon} className="tableIcon"/></td> : null
                     }
                     {                        
-                        isCommentRequired ? <td className="commentCell">{comment}<img src={commentsIcon} className="tableIcon"/> </td> : null
+                        (isCustomizationRequired && isCommentRequired) || !isCustomizationRequired ? 
+                            <td className="commentCell">{comment}<img src={commentsIcon} className="tableIcon"/> </td> : null
                     }
                     {/* {
                         isGeotagRequired ? <td className="geoTagCell">{geoTag}</td> : null
                     } */}
                     {                  
-                        isPhotoRequired ? <td><img src={photo} className="photoEvent"/></td> : null
+                        (isCustomizationRequired && isPhotoRequired) || !isCustomizationRequired ? 
+                            <td><img src={photo} className="photoEvent"/></td> : null
                     }
+                    <td>
+                        {happensDate.toString().slice(0,16).replace('T',' ')}<img src={timetable} className="tableIcon"/>
+                    </td>
             {/* <td className="changingCell">
                 <img onClick={() => setChanging(!isChanging)} src={change} className="tableIcon"/>
             </td> */}
