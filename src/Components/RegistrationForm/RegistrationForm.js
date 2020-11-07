@@ -3,7 +3,7 @@ import { Formik } from "formik";
 import * as yup from "yup";
 import { registerUser } from "../Api/Api";
 import { Link, Redirect } from "react-router-dom";
-import { Form, Button, Card } from "react-bootstrap";
+import { Form, Button, NavLink, Alert } from "react-bootstrap";
 import { useAuth } from "../../Context/auth";
 
 const PASSWORD_PATTERN = /^(?=.*?[A-Za-z])(?=.*?[0-9]).{8,32}$/;
@@ -12,18 +12,17 @@ const reqdFieldMsg = "This is a required field";
 const invalidPwdMsg =
   "Password must contain atleast eight characters, at least one letter and one number.";
 const invalidLoginMsg =
-  "Login must be alphanumeric characters (a-zA-Z0-9), only symbols: . - _ are allowed separated by alphanumeric";
+  "Login can contain alphanumeric characters (a-zA-Z0-9), only symbols: . - _ are allowed separated by alphanumeric";
 const schema = yup.object({
   login: yup
     .string()
     .matches(LOGIN_PATTERN, invalidLoginMsg)
-    .required(reqdFieldMsg)
-    .min(5, "Must be 5 characters or more")
-    .max(20, "Must be 20 characters or less"),
+    .required(reqdFieldMsg),
   password: yup
     .string()
     .matches(PASSWORD_PATTERN, invalidPwdMsg)
     .required(reqdFieldMsg),
+    //.oneOf([yup.ref("passwordConfirmation"), null], "Passwords must match"),
   passwordConfirmation: yup
     .string()
     .oneOf([yup.ref("password"), null], "Passwords must match"),
@@ -34,6 +33,7 @@ const RegistrationForm = () => {
   const [isError, setIsError] = useState(false);
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState();
   const { setAuthToken } = useAuth();
 
   const postRegistration = async () => {
@@ -47,6 +47,7 @@ const RegistrationForm = () => {
         }
       })
       .catch((e) => {
+        setErrorMessage(e.response.data.ErrorMessage);
         setIsError(true);
       });
   };
@@ -64,6 +65,7 @@ const RegistrationForm = () => {
         initialValues={{
           login: "",
           password: "",
+          passwordConfirmation: "",
         }}
       >
         {({
@@ -75,40 +77,72 @@ const RegistrationForm = () => {
           errors,
         }) => {
           return (
-            <Card>
-              <Form
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  postRegistration();
-                }}
-              >
-                <Form.Group controlId="formBasicLogin">
+            <>
+              <Form noValidate onSubmit={handleSubmit}>
+                <Form.Group controlId="formBasicRegistration">
                   <Form.Label>Username</Form.Label>
                   <Form.Control
                     type="text"
-                    placeholder="Enter login"
-                    value={login}
-                    onChange={(e) => setLogin(e.target.value)}
+                    name="login"
+                    placeholder="Enter user name"
+                    value={values.login}
+                    onBlur={handleBlur}
+                    onChange={e => {
+                      handleChange(e);
+                      setLogin(values.login)}}
+                    onSubmit={setLogin(values.login)}
+                    isInvalid={errors.login}
                   />
+                  {touched.login && (
+                    <Form.Control.Feedback type="invalid">
+                      {errors.login}
+                    </Form.Control.Feedback>
+                  )}
                 </Form.Group>
                 <Form.Group controlId="formBasicPassword">
                   <Form.Label>Password</Form.Label>
                   <Form.Control
                     type="password"
-                    placeholder="Enter password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    name="password"
+                    placeholder="Please enter a strong password"
+                    value={values.password}
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    onSubmit={setPassword(values.password)}
+                    isInvalid={errors.password}
                   />
+                  {touched.password && (
+                    <Form.Control.Feedback type="invalid">
+                      {errors.password}
+                    </Form.Control.Feedback>
+                  )}
+                </Form.Group>
+                <Form.Group controlId="formPasswordConfirmation">
+                  <Form.Label>Confirm password</Form.Label>
+                  <Form.Control
+                    type="password"
+                    name="passwordConfirmation"
+                    placeholder="Enter password again"
+                    value={values.passwordConfirmation}
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    isInvalid={errors.passwordConfirmation}
+                  />
+                  {touched.passwordConfirmation && (
+                    <Form.Control.Feedback type="invalid">
+                      {errors.passwordConfirmation}
+                    </Form.Control.Feedback>
+                  )}
                 </Form.Group>
                 <Button variant="primary" type="submit">
                   Register
                 </Button>
               </Form>
-              <Link to="/login">Already have an account?</Link>
-              {isError && (
-                <span>The username or password provided were incorrect!</span>
-              )}
-            </Card>
+              <NavLink>
+                <Link to="/login">Already have an account?</Link>
+              </NavLink>
+              {isError && <Alert variant="warning">{errorMessage}</Alert>}
+            </>
           );
         }}
       </Formik>

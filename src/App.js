@@ -11,7 +11,6 @@ import Events from "./Components/Events/Events";
 import Login from "./Components/RegistrationForm/Login";
 import Logout from "./Components/RegistrationForm/Logout";
 import { AuthContext } from "./Context/auth";
-import SignupForm from "./Components/testValidation/BookForm";
 
 function App() {
   const [authToken, setAuthToken] = useState(
@@ -45,11 +44,6 @@ function App() {
                   Statistics
                 </Link>
               </Nav.Link>
-              <Nav.Link>
-                <Link className="nav-link" to="/test">
-                  Bookform
-                </Link>
-              </Nav.Link>
             </Nav>
           </Nav>
           <Nav className="collapse navbar-collapse justify-content-end">
@@ -69,7 +63,6 @@ function App() {
           <Route path="/registration" component={RegistrationForm} />
           <Route path="/login" component={Login} />
           <Route path="/tracker/:id" component={Events} />
-          <Route path="/test" component={SignupForm} />
           <PrivateRoute path="/trackers" component={Tracker} />
         </Switch>
       </BrowserRouter>

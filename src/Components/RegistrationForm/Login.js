@@ -3,7 +3,7 @@ import { Redirect, Link } from "react-router-dom";
 import { Formik } from "formik";
 import * as yup from "yup";
 import { loginUser } from "../Api/Api";
-import { Form, Button, Card, Alert, NavLink} from "react-bootstrap";
+import { Form, Button, Alert, NavLink} from "react-bootstrap";
 import { useAuth } from "../../Context/auth";
 
 const PASSWORD_PATTERN = /^(?=.*?[A-Za-z])(?=.*?[0-9]).{8,32}$/;
@@ -17,20 +17,19 @@ const schema = yup.object({
   login: yup
     .string()
     .matches(LOGIN_PATTERN, invalidLoginMsg)
-    .required(reqdFieldMsg)
-    .min(5, "Must be 5 characters or more")
-    .max(20, "Must be 20 characters or less"),
+    .required(reqdFieldMsg),
   password: yup
     .string()
     .matches(PASSWORD_PATTERN, invalidPwdMsg)
     .required(reqdFieldMsg),
 });
 
-function Login() {
+const Login = () => {
   const [isLoggedIn, setLoggedIn] = useState(false);
   const [isError, setIsError] = useState(false);
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState();
   const { setAuthToken } = useAuth();
 
   const postLogin = async () => {
@@ -44,6 +43,7 @@ function Login() {
         }
       })
       .catch((e) => {
+        setErrorMessage(e.response.data.ErrorMessage);
         setIsError(true);
       });
   };
@@ -72,12 +72,11 @@ function Login() {
           errors,
         }) => {
           return (
-            <Card>
+            <>
               <Form noValidate onSubmit={handleSubmit}>
                 <Form.Group controlId="formBasicLogin">
                   <Form.Label>Login</Form.Label>
                   <Form.Control
-                    id="login"
                     type="text"
                     name="login"
                     placeholder="Please enter your login"
@@ -96,7 +95,6 @@ function Login() {
                 <Form.Group controlId="formBasicPassword">
                   <Form.Label>Password</Form.Label>
                   <Form.Control
-                    id="password"
                     type="password"
                     name="password"
                     placeholder="Please enter a strong password"
@@ -121,10 +119,10 @@ function Login() {
               </NavLink>
               {isError && (
                 <Alert variant="info">
-                  The login or password provided were incorrect!
+                  {errorMessage}
                 </Alert>
               )}
-            </Card>
+            </>
           );
         }}
       </Formik>
