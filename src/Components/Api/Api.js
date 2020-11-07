@@ -32,9 +32,15 @@ export const getTracker = (trackerId, authorizedRequestConfig) =>
 export const getEvents = (trackerId, authorizedRequestConfig) =>
   instance.get(`/trackers/${trackerId}/events`, authorizedRequestConfig);
 
+export const getEvent = (eventId, authorizedRequestConfig) =>
+instance.get(`/events/${eventId}/`, authorizedRequestConfig);  
+
 export const addEvent = (trackerId, eventBody, authorizedRequestConfig) =>
   instance.post(
     `/trackers/${trackerId}/events`,
     eventBody,
     authorizedRequestConfig
   );
+
+  export const deleteEvent = (eventId, authorizedRequestConfig) => 
+  instance.delete(`events/${eventId}`, authorizedRequestConfig);
