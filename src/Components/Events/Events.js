@@ -20,6 +20,7 @@ const Events = () => {
     const [events, setEvents] = useState([]);
     const [eventId, setId] = useState("");
     const [tracker, setTracker] = useState({});
+    const [isTrackerReceived, setTrackerReceivedStatus] = useState(false);
 
     useEffect(() => {
 
@@ -31,13 +32,17 @@ const Events = () => {
 
         const getTrackerAsync = async () => {
             getTracker(trackerId, authorizedRequestConfig)
-                .then(result => setTracker(result.data))
+                .then(result => 
+                    {
+                        setTracker(result.data);
+                        setTrackerReceivedStatus(true)
+                    })
                 .catch(e => console.log(e))
         }
 
-        getEventsAsync();
         getTrackerAsync();
-
+        getEventsAsync();
+        
     }, []);
 
     const onAddEvent = async (eventBody) => {
@@ -62,7 +67,7 @@ const Events = () => {
         setId(eventId);
         handleShow();
       };
-
+      console.log(tracker)
     let i = 1;  
     return (<div><br />
         <h2>{tracker.name}</h2>
@@ -74,11 +79,13 @@ const Events = () => {
             </tbody>
         </Table>
 
-        <EventForm onAdd={onAddEvent} /> 
-
+        {
+           isTrackerReceived ? <EventForm onAdd={onAddEvent} tracker={tracker}/> : null
+        }
+         
         <Modal show={show} onHide={handleClose} backdrop="static" keyboard={false} >
             <Modal.Body>
-                Do you really want to delete a events? Data cannot be recovered
+                Do you really want to delete a event? Data cannot be recovered
         </Modal.Body>
             <Modal.Footer>
                 <Button variant="secondary" onClick={handleClose}>

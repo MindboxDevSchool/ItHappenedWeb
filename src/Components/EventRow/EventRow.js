@@ -25,26 +25,25 @@ const EventRow = ({rowNumber, event, showModal, tracker}) => {
         <tr>
         <td className="rowNumber">{rowNumber}</td>
                     {
-                        <td className="scaleCell">{scale}<img src={scaleIcon} className="tableIcon"/></td>
+                        isScaleRequired ? <td className="scaleCell">{scale}<img src={scaleIcon} className="tableIcon"/></td> : null
                     }
                     {
-                        <td className="ratingCell">{rating}<img src={ratingIcon} className="tableIcon"/></td> 
+                        isRatingRequired ? <td className="ratingCell">{rating}<img src={ratingIcon} className="tableIcon"/></td> : null
                     }
-                    {
-                        
-                        <td className="commentCell">{comment}<img src={commentsIcon} className="tableIcon"/> </td>
+                    {                        
+                        isCommentRequired ? <td className="commentCell">{comment}<img src={commentsIcon} className="tableIcon"/> </td> : null
                     }
                     {/* {
                         isGeotagRequired ? <td className="geoTagCell">{geoTag}</td> : null
                     } */}
                     {                  
-                        <td><img src={photo} className="photoEvent"/></td>
+                        isPhotoRequired ? <td><img src={photo} className="photoEvent"/></td> : null
                     }
             {/* <td className="changingCell">
                 <img onClick={() => setChanging(!isChanging)} src={change} className="tableIcon"/>
             </td> */}
-            <td className="deleteCell">
-                <img onClick={() => showModal(id)} src={deleteIcon} className="tableIcon"/>
+            <td onClick={() => showModal(id)} className="deleteCell">
+                <img src={deleteIcon} className="tableIcon"/>
             </td>
         </tr>
               </>
