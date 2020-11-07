@@ -22,7 +22,7 @@ const Tracker = () => {
   const closeErrorMessage = () => {
     setTimeout(() => {
       setIsError(false);
-    }, 3000);
+    }, 6000);
   };
   
   useEffect(() => {
