@@ -1,0 +1,41 @@
+.tableIcon {
+    width: 25px;
+    height: 25px;
+    display: inline-block;
+}
+
+.rowNumber {
+    width: 10px;   
+}
+
+.iconsCell {
+    display:inline-block;
+}
+
+.changingCell {
+    width: 20px;
+}
+
+.deleteCell {
+    width: 20px;
+}
+
+.deleteCell:hover {
+    background-color: dimgray;
+}
+
+.showItem {
+    visibility: visible;
+}
+
+.hiddenItem {
+    visibility: hidden;
+}
+
+.tableCellInput {
+    height: 25px;
+}
+
+.photoEvent {
+    width: 20px;
+}
