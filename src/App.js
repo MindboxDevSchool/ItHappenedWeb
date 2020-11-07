@@ -28,42 +28,39 @@ function App() {
   return (
     <AuthContext.Provider value={{ authToken, setAuthToken: setToken }}>
       <BrowserRouter>
-        <Navbar bg="dark" variant="dark">
-          <Nav>
-            <Nav.Link>
-              <Link className="nav-link" to="home">
-                It happened
-              </Link>
-            </Nav.Link>
-            <Nav className="mr-auto">
+        <Navbar bg="dark" variant="dark" collapseOnSelect expand="sm">
+          <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+          <Navbar.Collapse id="responsive-navbar-nav">
+            <Nav>
               <Nav.Link>
-                <Link className="nav-link" to="/trackers">
-                  Trackers
+                <Link className="nav-link" to="home">
+                  It happened
                 </Link>
               </Nav.Link>
-              <Nav.Link>
-                <Link className="nav-link" to="/filtration">
-                  Filtration
-                </Link>
-              </Nav.Link>
-              <Nav.Link>
-                <Link className="nav-link" to="/statistics">
-                  Statistics
-                </Link>
-              </Nav.Link>
+              <Nav className="mr-auto">
+                <Nav.Link>
+                  <Link className="nav-link" to="/trackers">
+                    Trackers
+                  </Link>
+                </Nav.Link>
+                <Nav.Link>
+                  <Link className="nav-link" to="/filtration">
+                    Filtration
+                  </Link>
+                </Nav.Link>
+              </Nav>
             </Nav>
-          </Nav>
-          <Nav className="collapse navbar-collapse justify-content-end">
-            <Nav.Link>
-              {isTokenDropped && (
-                <Link className="nav-link" to="/login">
-                  LogIn
-                </Link>
-              )}
-            </Nav.Link>
-
-            <Nav.Link>{!isTokenDropped && <Logout>LogOut</Logout>}</Nav.Link>
-          </Nav>
+            <Nav className="collapse navbar-collapse justify-content-end">
+              <Nav.Link>
+                {isTokenDropped && (
+                  <Link className="nav-link" to="/login">
+                    LogIn
+                  </Link>
+                )}
+              </Nav.Link>
+              <Nav.Link>{!isTokenDropped && <Logout>LogOut</Logout>}</Nav.Link>
+            </Nav>
+          </Navbar.Collapse>
         </Navbar>
         <Switch>
           <Route path="/home" component={Main} />
