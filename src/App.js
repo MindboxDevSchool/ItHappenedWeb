@@ -10,6 +10,7 @@ import Tracker from "./Components/Tracker/Tracker";
 import Events from "./Components/Events/Events";
 import Login from "./Components/RegistrationForm/Login";
 import Logout from "./Components/RegistrationForm/Logout";
+import Filtration from "./Components/Filtration/Filtration";
 import { AuthContext } from "./Context/auth";
 
 function App() {
@@ -40,11 +41,6 @@ function App() {
                 </Link>
               </Nav.Link>
               <Nav.Link>
-                <Link className="nav-link" to="/events">
-                Events
-                </Link>
-              </Nav.Link>
-              <Nav.Link>
                 <Link className="nav-link" to="/filtration">
                   Filtration
                 </Link>
@@ -72,6 +68,9 @@ function App() {
           <Route path="/home" component={Main} />
           <Route path="/registration" component={RegistrationForm} />
           <Route path="/login" component={Login} />
+          <Route path="/filtration/" component={Filtration} />
+          <Route path="/filtration/:trackerId/" component={Filtration} />
+          <PrivateRoute path="/trackers" component={Tracker} />
           <Route path="/tracker/:trackerId" component={Events} />
           <PrivateRoute path="/trackers" component={Tracker} />
         </Switch>
