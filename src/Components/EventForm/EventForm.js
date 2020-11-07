@@ -9,16 +9,17 @@ import DateFnsUtils from '@date-io/moment';
 const EventForm = ({onAdd}) => {
 
     const [date, setDate] = useState("");
-    const [photo, setPhoto] = useState({});
+    const [photo, setPhoto] = useState("");
     const [scale, setScale] = useState("");
     const [rating, setRating] = useState("");
     const [comment, setComment] = useState("")
     const [selectedDate, handleDateChange] = useState(new Date());
 
     const toBase64 = file => {
+        //console.log(file)
         const reader = new FileReader();
         reader.readAsDataURL(file);
-        reader.onload = () => console.log(reader.result);
+        reader.onload = () => setPhoto(reader.result);
         reader.onerror = error => console.log((error));
     }
 

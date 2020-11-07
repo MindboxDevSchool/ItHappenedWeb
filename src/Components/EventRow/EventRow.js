@@ -4,6 +4,7 @@ import photoIcon from './icons/photo.png';
 import ratingIcon from './icons/rating.png';
 import scaleIcon from './icons/scale.png';
 import locationIcon from './icons/location.png';
+import './EventRow.css';
 
 const EventRow = ({rowNumber, event, showModal, tracker}) => {
     
@@ -37,7 +38,7 @@ const EventRow = ({rowNumber, event, showModal, tracker}) => {
                         isGeotagRequired ? <td className="geoTagCell">{geoTag}</td> : null
                     } */}
                     {                  
-                        <td><img src={`data:image/jpeg;base64,${photo}`} className="photoEvent"/></td>
+                        <td><img src={photo} className="photoEvent"/></td>
                     }
             {/* <td className="changingCell">
                 <img onClick={() => setChanging(!isChanging)} src={change} className="tableIcon"/>
