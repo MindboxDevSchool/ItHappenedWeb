@@ -11,6 +11,7 @@ import Events from "./Components/Events/Events";
 import Login from "./Components/RegistrationForm/Login";
 import Logout from "./Components/RegistrationForm/Logout";
 import { AuthContext } from "./Context/auth";
+import TrackerEditor from "./Components/Tracker/TrackerEditor"
 
 function App() {
   const [authToken, setAuthToken] = useState(
@@ -65,6 +66,7 @@ function App() {
           <Route path="/registration" component={RegistrationForm} />
           <Route path="/login" component={Login} />
           <Route path="/tracker/:trackerId" component={Events} />
+          <Route path="/editor/:trackerId" component={TrackerEditor} />
           <PrivateRoute path="/trackers" component={Tracker} />
         </Switch>
       </BrowserRouter>
