@@ -1,38 +1,98 @@
-import {getTrackers} from '../Api/Api';
+import { getTrackers, createTracker, deleteTracker } from "../Api/Api";
 import { useEffect, useState } from "react";
-import TrackerForm from '../TrackerForm/TrackerForm';
-import {ListGroup} from 'react-bootstrap';
+import TrackerForm from "../TrackerForm/TrackerForm";
+import { Table, Modal, Button } from "react-bootstrap";
+import "./Tracker.css";
+import TrackerRow from "../TrackerRow/TrackerRow";
 
 const Tracker = () => {
-    const [name, setName] = useState("");
-    const [id, setId] = useState("");
-    const [trackers, setTrackers] = useState([]);
-    
-    useEffect(() => {
-        
-        const getTrackersAsync = async () => {
-            getTrackers()
-            .then(result =>  setTrackers(result.data))
-            .catch(e => console.log(e))
-        }
-        getTrackersAsync();
-      }, []);
+  const [id, setId] = useState("");
+  const [trackers, setTrackers] = useState([]);
+  const [show, setShow] = useState(false);
 
-    const addTracker = (tracker) => {
-        setTrackers({...trackers, tracker})
-    }  
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
-    return (<div>
-        {
-            trackers.map(tracker => 
-                <ListGroup>
-                    <ListGroup.Item action href={"tracker/" + tracker.id}>
-                        {tracker.name}
-                    </ListGroup.Item>
-                </ListGroup>)
-        }
-        <TrackerForm />
-    </div>);
-}
+  const authorizedRequestConfig = {
+    headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+  };
+
+  useEffect(() => {
+    const getTrackersAsync = async () => {
+      await getTrackers(authorizedRequestConfig)
+        .then((result) => setTrackers(result.data))
+        .catch((e) => console.log(e));
+    };
+    getTrackersAsync();
+  }, []);
+
+  const addTracker = async (trackerBody) => {
+    await createTracker(trackerBody, authorizedRequestConfig)
+      .then((result) => {
+        trackerBody.id = result.data.id;
+        setTrackers([...trackers, trackerBody]);
+      })
+      .catch((error) => console.log(error.response));
+  };
+
+  const onDeleteTracker = async () => {
+    await deleteTracker(id, authorizedRequestConfig)
+      .then((result) => {
+        setTrackers(trackers.filter((e) => e.id != id));
+      })
+      .catch((error) => console.log(error.response));
+  };
+
+  let i = 1;
+
+  const showModal = (trackerId) => {
+    setId(trackerId);
+    handleShow();
+  };
+
+  return (
+    <div>
+      <br />
+      <Table striped hover variant="dark">
+        <tbody>
+          {trackers.map((tracker) => (
+            <TrackerRow
+              rowNumber={i++}
+              tracker={tracker}
+              showModal={showModal}
+            />
+          ))}
+        </tbody>
+      </Table>
+
+      <TrackerForm onAdd={addTracker} />
+
+      <Modal
+        show={show}
+        onHide={handleClose}
+        backdrop="static"
+        keyboard={false}
+      >
+        <Modal.Body>
+          Do you really want to delete a track? Data cannot be recovered
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button
+            variant="danger"
+            onClick={(e) => {
+              onDeleteTracker();
+              handleClose();
+            }}
+          >
+            Delete
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </div>
+  );
+};
 
 export default Tracker;
