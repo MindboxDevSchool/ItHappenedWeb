@@ -30,7 +30,7 @@ const TrackerForm = ({onAdd}) => {
                     "isCustomizationRequired" : isCustomizationRequired
                     }}); setName("");}}>
           <InputGroup>
-          <FormControl placeholder="Enter name for a new tracker" value={name} onChange={e => setName(e.target.value)}/>
+          <FormControl placeholder="Enter name for a new tracker" minLength="3" required value={name} onChange={e => setName(e.target.value)}/>
           <InputGroup.Append>
           <Button variant="outline-secondary" onClick={e => setCustomizationRequired(!isCustomizationRequired)}>
             {isCustomizationRequired ? "Delete" : "Add"} customization
