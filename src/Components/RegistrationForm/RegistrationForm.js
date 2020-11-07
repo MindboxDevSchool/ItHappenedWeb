@@ -7,15 +7,19 @@ import { Form, Button, Card } from "react-bootstrap";
 import { useAuth } from "../../Context/auth";
 
 const PASSWORD_PATTERN = /^(?=.*?[A-Za-z])(?=.*?[0-9]).{8,32}$/;
+const LOGIN_PATTERN = /^[a-zA-Z0-9]([._-](?![._-])|[a-zA-Z0-9]){3,18}[a-zA-Z0-9]$/;
 const reqdFieldMsg = "This is a required field";
 const invalidPwdMsg =
   "Password must contain atleast eight characters, at least one letter and one number.";
-
+const invalidLoginMsg =
+  "Login must be alphanumeric characters (a-zA-Z0-9), only symbols: . - _ are allowed separated by alphanumeric";
 const schema = yup.object({
   login: yup
     .string()
+    .matches(LOGIN_PATTERN, invalidLoginMsg)
     .required(reqdFieldMsg)
-    .min(5, "Must be 5 characters or more"),
+    .min(5, "Must be 5 characters or more")
+    .max(20, "Must be 20 characters or less"),
   password: yup
     .string()
     .matches(PASSWORD_PATTERN, invalidPwdMsg)
