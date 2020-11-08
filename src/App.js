@@ -68,7 +68,6 @@ function App() {
           <Route path="/login" component={Login} />
           <Route path="/tracker/:trackerId" component={Events} />
           <Route path="/trackers" component={Tracker} />
-
           <Route path="/filtration/:trackerId" component={TrackerFiltration} />
           <Route path="/filtration" component={Filtration} />
         </Switch>
