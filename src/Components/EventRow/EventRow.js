@@ -5,6 +5,7 @@ import ratingIcon from './icons/rating.png';
 import scaleIcon from './icons/scale.png';
 import locationIcon from './icons/location.png';
 import './EventRow.css';
+import timetable from './icons/timetable.png'
 
 const EventRow = ({ rowNumber, event, showModal, tracker }) => {
 
@@ -23,28 +24,34 @@ const EventRow = ({ rowNumber, event, showModal, tracker }) => {
 
     return (<>
         <tr>
-            <td className="rowNumber">{rowNumber}</td>
-            {
-                <td className="scaleCell">{scale}<img src={scaleIcon} className="tableIcon" /></td>
-            }
-            {
-                <td className="ratingCell">{rating}<img src={ratingIcon} className="tableIcon" /></td>
-            }
-            {
-
-                <td className="commentCell">{comment}<img src={commentsIcon} className="tableIcon" /> </td>
-            }
-            {/* {
+        <td className="rowNumber">{rowNumber}</td>
+                    {
+                        (isCustomizationRequired && isScaleRequired) || !isCustomizationRequired ? 
+                            <td className="scaleCell">{scale}{scaleMeasurementUnit}<img src={scaleIcon} className="tableIcon"/></td> : null
+                    }
+                    {
+                        (isCustomizationRequired && isRatingRequired) || !isCustomizationRequired ? 
+                            <td className="ratingCell">{rating}<img src={ratingIcon} className="tableIcon"/></td> : null
+                    }
+                    {                        
+                        (isCustomizationRequired && isCommentRequired) || !isCustomizationRequired ? 
+                            <td className="commentCell">{comment}<img src={commentsIcon} className="tableIcon"/> </td> : null
+                    }
+                    {/* {
                         isGeotagRequired ? <td className="geoTagCell">{geoTag}</td> : null
                     } */}
-            {
-                <td><img src={photo} className="photoEvent" /></td>
-            }
+                    {                  
+                        (isCustomizationRequired && isPhotoRequired) || !isCustomizationRequired ? 
+                            <td><img src={photo} className="photoEvent"/></td> : null
+                    }
+                    <td>
+                        {happensDate.toString().slice(0,16).replace('T',' ')}<img src={timetable} className="tableIcon"/>
+                    </td>
             {/* <td className="changingCell">
                 <img onClick={() => setChanging(!isChanging)} src={change} className="tableIcon"/>
             </td> */}
-            <td className="deleteCell">
-                <img onClick={() => showModal(id)} src={deleteIcon} className="tableIcon" />
+            <td onClick={() => showModal(id)} className="deleteCell">
+                <img src={deleteIcon} className="tableIcon"/>
             </td>
         </tr>
     </>

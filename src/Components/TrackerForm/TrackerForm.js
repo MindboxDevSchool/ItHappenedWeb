@@ -16,30 +16,24 @@ const TrackerForm = ({ onFilter }) => {
   const [isScaleRequired, setScaleRequired] = useState(false);
   const [isPhotoRequired, setPhotoRequired] = useState(false);
   const [scaleMeasurementUnit, setScaleMeasurementUnit] = useState("");
-
-  return <Form onSubmit={e => {
-    e.preventDefault();
-    onFilter(
-      {
-        "name": name,
-        "customizationSettings": {
-          "scaleMeasurementUnit": scaleMeasurementUnit,
-          "isPhotoRequired": isPhotoRequired,
-          "isScaleRequired": isScaleRequired,
-          "isRatingRequired": isRatingRequired,
-          "isGeotagRequired": isGeotagRequired,
-          "isCommentRequired": isCommentRequired,
-          "isCustomizationRequired": isCustomizationRequired
-        }
-      }
-    ); setName("");
-  }}>
-
-    <InputGroup>
-      <FormControl placeholder="Enter name for a new tracker" value={name} onChange={e => setName(e.target.value)} />
-      <InputGroup.Append>
-        <Button variant="outline-secondary" onClick={e => setCustomizationRequired(!isCustomizationRequired)}>
-          {isCustomizationRequired ? "Delete" : "Add"} customization
+  
+  return <Form onSubmit=
+            {e => {e.preventDefault(); onAdd(
+              {"name": name, 
+                "customizationSettings": {
+                    "scaleMeasurementUnit" : scaleMeasurementUnit,
+                    "isPhotoRequired" : isPhotoRequired,
+                    "isScaleRequired" : isScaleRequired,
+                    "isRatingRequired" : isRatingRequired,
+                    "isGeotagRequired" : isGeotagRequired,
+                    "isCommentRequired" : isCommentRequired,
+                    "isCustomizationRequired" : isCustomizationRequired
+                    }}); setName("");}}>
+          <InputGroup>
+          <FormControl placeholder="Enter name for a new tracker" minLength="3" required value={name} onChange={e => setName(e.target.value)}/>
+          <InputGroup.Append>
+          <Button variant="outline-secondary" onClick={e => setCustomizationRequired(!isCustomizationRequired)}>
+            {isCustomizationRequired ? "Delete" : "Add"} customization
           </Button>
         <Button type="submit" variant="outline-secondary">
           <img src={submit} className="buttonIcon" />
