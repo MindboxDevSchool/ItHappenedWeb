@@ -8,8 +8,11 @@ import photo from "./icons/photo.png";
 import rating from "./icons/rating.png";
 import scale from "./icons/scale.png";
 import location from "./icons/location.png";
+import { useState } from "react";
 
-const TrackerRow = ({ rowNumber, tracker, onEdit, showModal }) => {
+const TrackerRow = (props) => {
+  const[tracker, setTracker] = useState(props.tracker);
+
   const {
     id,
     name,
@@ -24,15 +27,17 @@ const TrackerRow = ({ rowNumber, tracker, onEdit, showModal }) => {
 
   const toTrackerEditor = { 
     pathname: "/editor/" + tracker.id, 
-    tracker: tracker,
-    handleEdit : onEdit
+    trackerName: tracker.name,
+    trackerId: tracker.id,
+    handleEdit: props.onEdit,
+    updateTrackerRow: setTracker
   };
 
 
   return (
     <>
       <tr>
-        <td className="rowNumber">{rowNumber}</td>
+        <td className="rowNumber">{props.rowNumber}</td>
         <td className="nameCell">
           <Link to={"tracker/" + id}>{name}</Link>
         </td>
@@ -60,7 +65,7 @@ const TrackerRow = ({ rowNumber, tracker, onEdit, showModal }) => {
         </td>
         <td className="deleteCell">
           <img
-            onClick={() => showModal(id)}
+            onClick={() => props.showModal(id)}
             src={deleteIcon}
             alt="delete"
             className="tableIcon"
@@ -69,6 +74,6 @@ const TrackerRow = ({ rowNumber, tracker, onEdit, showModal }) => {
       </tr>
     </>
   );
-}; //onClick={() => setChanging(!isChanging)}
+}; 
 
 export default TrackerRow;

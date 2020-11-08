@@ -52,7 +52,7 @@ const Tracker = () => {
   const onDeleteTracker = async () => {
     await deleteTracker(id, authorizedRequestConfig)
       .then((result) => {
-        setTrackers(trackers.filter((e) => e.id != id));
+        setTrackers(trackers.filter((tr) => tr.id != id));
       })
       .catch((e) => {
         setErrorMessage(e.response.data.ErrorMessage);
@@ -61,7 +61,16 @@ const Tracker = () => {
   };
 
   const onEditTracker = async (editedTracker, trackerId) => {
+    // var editedTrFromSet = trackers.filter(tr => tr.id == trackerId);
+    // var isTheSame = editedTrFromSet === editedTracker;
     await editTracker(trackerId, editedTracker, authorizedRequestConfig)
+    // setTrackers(trackers.filter((tr) => tr.id != trackerId));
+    // setTrackers([...trackers, editedTracker]);
+    // var newTrackers = trackers.map(tr => tr.id == trackerId ? editedTracker : tr);
+    // setTrackers(newTrackers);
+    .then(result => {
+      var t = result;
+    })
       .catch((e) => {
         setErrorMessage(e.response.data.ErrorMessage);
         setIsError(true);
@@ -82,6 +91,7 @@ const Tracker = () => {
         <tbody>
           {trackers.map((tracker) => (
             <TrackerRow
+              key={tracker.id}
               rowNumber={i++}
               tracker={tracker}
               onEdit={onEditTracker}

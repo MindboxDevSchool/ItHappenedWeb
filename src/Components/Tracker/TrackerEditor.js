@@ -6,6 +6,7 @@ import {
   FormControl,
   FormLabel,
 } from "react-bootstrap";
+import { Redirect} from "react-router-dom";
 import "../TrackerForm/TrackerForm.css";
 import minus from "../TrackerForm/icons/minus.png";
 import plus from "../TrackerForm/icons/plus.png";
@@ -20,9 +21,13 @@ const TrackerEditor = (props) => {
   const [isScaleRequired, setScaleRequired] = useState(false);
   const [isPhotoRequired, setPhotoRequired] = useState(false);
   const [scaleMeasurementUnit, setScaleMeasurementUnit] = useState("");
+  const [isEdited, setEdited] = useState(false);
 
   const btnVariant = "outline-secondary";
 
+  if (isEdited) {
+    return <Redirect to="/trackers" />;
+  }
   return (
     <Form
       onSubmit={(e) => {
@@ -38,11 +43,23 @@ const TrackerEditor = (props) => {
             isCommentRequired: isCommentRequired,
             isCustomizationRequired: isCustomizationRequired,
           },
-        }, props.location.tracker.id);
-        setName("");
+        }, props.location.trackerId);
+
+        setEdited(true);
+        props.location.updateTrackerRow({
+          name: name,
+          customizationSettings: {
+            scaleMeasurementUnit: scaleMeasurementUnit,
+            isPhotoRequired: isPhotoRequired,
+            isScaleRequired: isScaleRequired,
+            isRatingRequired: isRatingRequired,
+            isGeotagRequired: isGeotagRequired,
+            isCommentRequired: isCommentRequired,
+            isCustomizationRequired: isCustomizationRequired,
+          }});
       }}
     >
-      <FormLabel>Old tracker name: {props.location.tracker.name}</FormLabel>
+      <FormLabel>Old tracker name: {props.location.trackerName}</FormLabel>
       <br />
       <FormLabel>Enter new tracker name and customization settings:</FormLabel>
       <InputGroup>
