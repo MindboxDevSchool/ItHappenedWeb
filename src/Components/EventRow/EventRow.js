@@ -7,20 +7,20 @@ import locationIcon from './icons/location.png';
 import './EventRow.css';
 import timetable from './icons/timetable.png'
 
-const EventRow = ({ rowNumber, event, showModal, tracker }) => {
+const EventRow = ({rowNumber, event, showModal, tracker}) => {
+    
+    const {id, scale, rating, comment, happensDate, photo} = event;//geoTag,
 
-    const { id, scale, rating, comment, happensDate, photo } = event;//geoTag,
-
-    const {
-        name,
-        customizationSettings: { isPhotoRequired },
-        customizationSettings: { isRatingRequired },
-        customizationSettings: { isGeotagRequired },
-        customizationSettings: { isCommentRequired },
-        customizationSettings: { isScaleRequired },
-        customizationSettings: { scaleMeasurementUnit },
-        customizationSettings: { isCustomizationRequired }
-    } = tracker;
+    const { 
+        name, 
+        customizationSettings : {isPhotoRequired},
+        customizationSettings : {isRatingRequired},
+        customizationSettings : {isGeotagRequired},
+        customizationSettings : {isCommentRequired},
+        customizationSettings : {isScaleRequired},
+        customizationSettings : {scaleMeasurementUnit},
+        customizationSettings : {isCustomizationRequired}
+        } = tracker;
 
     return (<>
         <tr>
@@ -54,8 +54,8 @@ const EventRow = ({ rowNumber, event, showModal, tracker }) => {
                 <img src={deleteIcon} className="tableIcon"/>
             </td>
         </tr>
-    </>
-    )
+              </>
+        )
 }
 
 export default EventRow;
