@@ -61,21 +61,13 @@ const Tracker = () => {
   };
 
   const onEditTracker = async (editedTracker, trackerId) => {
-    // var editedTrFromSet = trackers.filter(tr => tr.id == trackerId);
-    // var isTheSame = editedTrFromSet === editedTracker;
     await editTracker(trackerId, editedTracker, authorizedRequestConfig)
-    // setTrackers(trackers.filter((tr) => tr.id != trackerId));
-    // setTrackers([...trackers, editedTracker]);
-    // var newTrackers = trackers.map(tr => tr.id == trackerId ? editedTracker : tr);
-    // setTrackers(newTrackers);
-    .then(result => {
-      var t = result;
-    })
       .catch((e) => {
         setErrorMessage(e.response.data.ErrorMessage);
         setIsError(true);
       });
   };
+
 
   let i = 1;
 

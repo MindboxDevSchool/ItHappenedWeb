@@ -33,7 +33,6 @@ const TrackerRow = (props) => {
     updateTrackerRow: setTracker
   };
 
-
   return (
     <>
       <tr>
