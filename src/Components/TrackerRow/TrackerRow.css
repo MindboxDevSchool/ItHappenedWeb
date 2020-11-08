@@ -20,6 +20,10 @@
     width: 20px;
 }
 
+.changingCell:hover {
+    background-color: dimgray;
+}
+
 .showItem {
     visibility: visible;
 }
