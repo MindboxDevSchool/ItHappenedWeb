@@ -56,11 +56,9 @@ const TrackerRow = (props) => {
           </span>
         </td>
         <td className="changingCell">
-          <NavLink>
-            <Link className="nav-link" to={toTrackerEditor}>
+            <Link to={toTrackerEditor}>
               <img src={changeIcon} alt="change" className="tableIcon" />
             </Link>
-          </NavLink>
         </td>
         <td className="deleteCell">
           <img

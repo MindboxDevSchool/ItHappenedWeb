@@ -46,7 +46,7 @@ const EventForm = ({onAdd, tracker}) => {
                     {
                         (isCustomizationRequired && isScaleRequired) || !isCustomizationRequired ?            
                             <Col xs={2}>
-                                <Form.Control required={isCustomizationRequired && isScaleRequired} 
+                                <Form.Control required={isCustomizationRequired && isScaleRequired} type="number"
                                     placeholder="Scale" value={scale} onChange={e => setScale(e.target.value)}/>
                             </Col> : null
                     }
@@ -54,7 +54,7 @@ const EventForm = ({onAdd, tracker}) => {
                         (isCustomizationRequired && isRatingRequired) || !isCustomizationRequired ? 
                         <Col>
                             <Form.Control placeholder="Rating" required={isCustomizationRequired && isRatingRequired} 
-                                value={rating} onChange={e => setRating(e.target.value)}/>
+                                type="number" value={rating} onChange={e => setRating(e.target.value)}/>
                         </Col> : null
                     }
                     {
