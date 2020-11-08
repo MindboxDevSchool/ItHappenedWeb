@@ -1,40 +1,64 @@
-import { getTrackers, createTracker, deleteTracker } from "../Api/Api";
-import { useEffect, useState } from "react";
-import { Table, Modal, Button } from "react-bootstrap";
-import TrackerReadonlyRow from "../Filtration/TrackerReadonlyRow"
-import "./Filtration.css";
+import { useEffect, useState } from 'react';
+import FiltrationForm from "./FiltrationForm";
+import { Table } from "react-bootstrap";
+import EventRow from '../EventRow/EventRow';
+import {getFilteration, getTracker } from '../Api/Api';
+import { useParams } from "react-router-dom";
+
 const Filtration = () => {
-    const [trackers, setTrackers] = useState([]);
+    const [events, setEvents] = useState([]);
+    const [tracker, setTracker] = useState({});
+    const [show, setShow] = useState(false);
+    const handleShow = () => setShow(true);
+    const { trackerId } = useParams();
+    const [id, setId] = useState("");
 
-    const authorizedRequestConfig = {
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-    };
+    const authorizedRequestConfig = {headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },};
+    
 
-    useEffect(() => {
-        const getTrackersAsync = async () => {
-            await getTrackers(authorizedRequestConfig)
-                .then((result) => setTrackers(result.data))
-                .catch((e) => console.log(e));
-        };
-        getTrackersAsync();
+    const onFilterationSubmit = async (filterBody) => {
+        console.log(filterBody)
+        await getFilteration(trackerId, filterBody, authorizedRequestConfig)
+            .then(result => {
+                setEvents(result.data);
+            })
+            .catch(error => console.log(error.response));
+    }
+
+    useEffect(() => {   
+        const getTrackerAsync = async () => {
+            getTracker(trackerId, authorizedRequestConfig)
+                .then(result => setTracker(result.data))
+                .catch(e => console.log(e))
+        }
+        const getFiltertionAsync = async (filterParam) => {
+            getFilteration(trackerId, filterParam, authorizedRequestConfig)
+                .then(result => setEvents(result.data))
+                .catch(e => console.log(e))
+        }
+        getTrackerAsync();
+        getFiltertionAsync();
     }, []);
 
-    let i = 1;
-    return (
-        <div>
-            <br />
-            <Table striped hover variant="dark">
-                <tbody>
-                    {trackers.map((tracker) => (
-                        <TrackerReadonlyRow
-                            rowNumber={i++}
-                            tracker={tracker}
-                        />
-                    ))}
-                </tbody>
-            </Table>
-        </div>
-    );
-};
+
+    const showModal = (trackerId) => {
+        setId(trackerId);
+        handleShow();
+    };
+
+    let i = 1;  
+    return (<div>
+        <FiltrationForm onFilteration={onFilterationSubmit} /> 
+
+        <Table striped hover variant="dark">
+            <tbody>
+                {
+                    events.map(event => <EventRow rowNumber={i++} event={event} showModal={showModal} tracker={tracker}/>)
+                }
+            </tbody>
+        </Table>
+    </div>)
+
+}
 
 export default Filtration;
