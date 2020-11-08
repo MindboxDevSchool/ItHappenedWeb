@@ -39,3 +39,9 @@
 .photoEvent {
     width: 20px;
 }
+
+.photoEvent:hover {
+    transform: scale(10);
+    border: 0.1px black solid;
+    z-index:99999999; 
+}
