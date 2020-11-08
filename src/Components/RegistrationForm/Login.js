@@ -25,10 +25,10 @@ const schema = yup.object({
 });
 
 const Login = () => {
-  const [isLoggedIn, setLoggedIn] = useState(false);
-  const [isError, setIsError] = useState(false);
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoggedIn, setLoggedIn] = useState(false);
+  const [isError, setIsError] = useState(false);
   const [errorMessage, setErrorMessage] = useState();
   const { setAuthToken } = useAuth();
 
