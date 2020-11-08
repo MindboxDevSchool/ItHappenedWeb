@@ -38,18 +38,9 @@ instance.get(`/events/${eventId}/`, authorizedRequestConfig);
 export const addEvent = (trackerId, eventBody, authorizedRequestConfig) =>
   instance.post(
     `/trackers/${trackerId}/events`,
-    eventBody, 
+    eventBody,
     authorizedRequestConfig
   );
 
-export const getFilteration = (trackerId, filterParams, authorizedRequestConfig) =>
-  instance.get(
-    `/trackers/${trackerId}/events/filters`,
-    null,
-    filterParams,
-    authorizedRequestConfig,
-  );
-
-
-export const deleteEvent = (eventId, authorizedRequestConfig) => 
-instance.delete(`events/${eventId}`, authorizedRequestConfig);
+  export const deleteEvent = (eventId, authorizedRequestConfig) => 
+  instance.delete(`events/${eventId}`, authorizedRequestConfig);
