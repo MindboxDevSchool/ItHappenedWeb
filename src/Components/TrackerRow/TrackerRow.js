@@ -7,53 +7,53 @@ import rating from './icons/rating.png';
 import scale from './icons/scale.png';
 import location from './icons/location.png';
 
-const TrackerRow = ({ rowNumber, tracker, showModal }) => {
+const TrackerRow = ({rowNumber, tracker, showModal}) => {
 
-    const { id,
-        name,
-        customizationSettings: { isPhotoRequired },
-        customizationSettings: { isRatingRequired },
-        customizationSettings: { isGeotagRequired },
-        customizationSettings: { isCommentRequired },
-        customizationSettings: { isScaleRequired },
-        customizationSettings: { scaleMeasurementUnit },
-        customizationSettings: { isCustomizationRequired }
-    } = tracker;
+    const { id, 
+        name, 
+        customizationSettings : {isPhotoRequired},
+        customizationSettings : {isRatingRequired},
+        customizationSettings : {isGeotagRequired},
+        customizationSettings : {isCommentRequired},
+        customizationSettings : {isScaleRequired},
+        customizationSettings : {scaleMeasurementUnit},
+        customizationSettings : {isCustomizationRequired}
+        } = tracker;
 
     return (<>
-        <tr>
-            <td className="rowNumber">{rowNumber}</td>
-            <td className="nameCell">
+    <tr>
+    <td className="rowNumber">{rowNumber}</td>
+        <td className="nameCell">
                 <Link to={"tracker/" + id}>{name}</Link>
             </td>
             <td className="iconsCell">
                 <span>
-                    {
-                        isPhotoRequired ? <img src={photo} className="tableIcon" /> : null
-                    }
-                    {
-                        isScaleRequired ? <img src={scale} className="tableIcon" /> : null
-                    }
-                    {
-                        isRatingRequired ? <img src={rating} className="tableIcon" /> : null
-                    }
-                    {
-                        isCommentRequired ? <img src={comments} className="tableIcon" /> : null
-                    }
-                    {
-                        isGeotagRequired ? <img src={location} className="tableIcon" /> : null
-                    }
+                {                  
+                    isPhotoRequired ? <img src={photo} className="tableIcon"/> : null
+                }
+                {
+                    isScaleRequired ? <img src={scale} className="tableIcon"/> : null
+                }
+                {
+                    isRatingRequired ? <img src={rating} className="tableIcon"/> : null
+                }
+                {
+                    isCommentRequired ? <img src={comments} className="tableIcon"/> : null
+                }
+                {
+                    isGeotagRequired ? <img src={location} className="tableIcon"/> : null
+                }
                 </span>
             </td>
-            {/* <td className="changingCell">
+        {/* <td className="changingCell">
             <img onClick={() => setChanging(!isChanging)} src={change} className="tableIcon"/>
         </td> */}
-            <td className="deleteCell">
-                <img onClick={() => showModal(id)} src={deleteIcon} className="tableIcon" />
-            </td>
-        </tr>
-    </>
+        <td className="deleteCell">
+            <img onClick={() => showModal(id)} src={deleteIcon} className="tableIcon"/>
+        </td>
+    </tr>
+          </>
     )
-}
+} 
 
 export default TrackerRow;
