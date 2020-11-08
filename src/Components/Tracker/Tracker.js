@@ -1,4 +1,9 @@
-import { getTrackers, createTracker, deleteTracker, editTracker } from "../Api/Api";
+import {
+  getTrackers,
+  createTracker,
+  deleteTracker,
+  editTracker,
+} from "../Api/Api";
 import { useEffect, useState } from "react";
 import TrackerForm from "../TrackerForm/TrackerForm";
 import { Table, Modal, Button, Alert } from "react-bootstrap";
@@ -24,7 +29,7 @@ const Tracker = () => {
       setIsError(false);
     }, 6000);
   };
-  
+
   useEffect(() => {
     const getTrackersAsync = async () => {
       await getTrackers(authorizedRequestConfig)
@@ -61,22 +66,21 @@ const Tracker = () => {
   };
 
   const onEditTracker = async (editedTracker, trackerId) => {
-    // var editedTrFromSet = trackers.filter(tr => tr.id == trackerId);
-    // var isTheSame = editedTrFromSet === editedTracker;
     await editTracker(trackerId, editedTracker, authorizedRequestConfig)
-    // setTrackers(trackers.filter((tr) => tr.id != trackerId));
-    // setTrackers([...trackers, editedTracker]);
-    // var newTrackers = trackers.map(tr => tr.id == trackerId ? editedTracker : tr);
-    // setTrackers(newTrackers);
-    .then(result => {
-      var t = result;
-    })
+      .then((result) => {
+        var t = result;
+      })
       .catch((e) => {
         setErrorMessage(e.response.data.ErrorMessage);
         setIsError(true);
       });
   };
-
+    // var editedTrFromSet = trackers.filter(tr => tr.id == trackerId);
+    // var isTheSame = editedTrFromSet === editedTracker;
+    // setTrackers(trackers.filter((tr) => tr.id != trackerId));
+    // setTrackers([...trackers, editedTracker]);
+    // var newTrackers = trackers.map(tr => tr.id == trackerId ? editedTracker : tr);
+    // setTrackers(newTrackers);
   let i = 1;
 
   const showModal = (trackerId) => {

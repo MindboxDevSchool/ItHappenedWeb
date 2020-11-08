@@ -30,8 +30,7 @@ export const getTracker = (trackerId, authorizedRequestConfig) =>
   instance.get(`/trackers/${trackerId}`, authorizedRequestConfig);
 
 export const editTracker = (trackerId, editedTrackerBody, authorizedRequestConfig) => {
-  instance
-  .put(`/trackers/${trackerId}`, editedTrackerBody, authorizedRequestConfig);}
+  return instance.put(`/trackers/${trackerId}`, editedTrackerBody, authorizedRequestConfig);}
 
 export const getEvents = (trackerId, authorizedRequestConfig) =>
   instance.get(`/trackers/${trackerId}/events`, authorizedRequestConfig);
