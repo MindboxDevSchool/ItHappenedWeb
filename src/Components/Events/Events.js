@@ -19,6 +19,7 @@ const Events = () => {
   const [events, setEvents] = useState([]);
   const [eventId, setId] = useState("");
   const [tracker, setTracker] = useState({});
+  const [isTrackerReceived, setTrackerReceivedStatus] = useState(false);
   const [isError, setIsError] = useState(false);
   const [errorMessage, setErrorMessage] = useState();
 
@@ -40,7 +41,10 @@ const Events = () => {
 
     const getTrackerAsync = async () => {
       getTracker(trackerId, authorizedRequestConfig)
-        .then((result) => setTracker(result.data))
+        .then((result) => {
+          setTracker(result.data);
+          setTrackerReceivedStatus(true);
+        })
         .catch((e) => {
           setErrorMessage(e.response.data.ErrorMessage);
           setIsError(true);
@@ -97,9 +101,9 @@ const Events = () => {
           ))}
         </tbody>
       </Table>
-
-      <EventForm onAdd={onAddEvent} />
-
+      {isTrackerReceived ? (
+        <EventForm onAdd={onAddEvent} tracker={tracker} />
+      ) : null}
       <Modal
         show={show}
         onHide={handleClose}

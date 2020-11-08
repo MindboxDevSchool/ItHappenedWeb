@@ -31,3 +31,7 @@
 .tableCellInput {
     height: 25px;
 }
+
+.nameCell {
+    font-weight: 700;
+}
