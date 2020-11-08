@@ -89,6 +89,8 @@ const Events = () => {
     <div>
       <br />
       <h2>{tracker.name}</h2>
+      <br />
+      <h4>Tracker events</h4>
       <Table striped hover variant="dark">
         <tbody>
           {events.map((event) => (
