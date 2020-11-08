@@ -59,8 +59,8 @@ const FiltrationForm = ({ onFilteration }) => {
         <Form.Control placeholder="Gps Latitude Down Left Corner" value={gpsLatLeftCorner} onChange={e => setGpsLatLeftCorner(e.target.value)} />
         <Form.Control placeholder="Gps Longitude Down Left Corner" value={gpsLngLeftCorner} onChange={e => setGpsLngLeftCorner(e.target.value)} />
         <Form.Control placeholder="Gps Latitude Top Upper Corner" value={gpsLatRightCorner} onChange={e => setGpsLatRightCorner(e.target.value)} />
-        <Form.Control placeholder="Gps Longitude Top Upper Corner" value={gpsLngRightCorner} onChange={e => setGpsLngRightCorner(e.target.value)} />
-
+        <Form.Control placeholder="Gps Longitude Top Upper Corner" value={gpsLngRightCorner} onChange={e => setGpsLngRightCorner(e.target.value)} />  */}
+        <span> Accept Filter </span>
         <Button type="submit" variant="outline-secondary" className="submitButton">
             <img src={process.env.PUBLIC_URL + '/img/submit.png'} className="buttonIcon" />
         </Button>
