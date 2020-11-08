@@ -66,5 +66,18 @@ export const getFilteration = (
     authorizedRequestConfig
   );
 
+
+export const getFilteratedEvents = (trackerId, filterParams, authorizedRequestConfig) => {
+  let request_config = {};
+  request_config.params = filterParams;
+  request_config.headers = authorizedRequestConfig.headers;
+
+  return instance.get(
+    `/trackers/${trackerId}/events/filters`,
+    request_config
+  );
+}
+
+
 export const deleteEvent = (eventId, authorizedRequestConfig) =>
   instance.delete(`events/${eventId}`, authorizedRequestConfig);
