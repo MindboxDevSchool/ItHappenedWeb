@@ -73,12 +73,4 @@ const FiltrationForm = ({ onFilteration }) => {
     </Form>;
 }
 
-const Clean = (obj) => {
-    for (var propName in obj) { 
-      if (obj[propName] === null || obj[propName] === undefined) {
-        delete obj[propName];
-      }
-    }
-  }
-
 export default FiltrationForm;

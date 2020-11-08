@@ -1,4 +1,4 @@
-import { getTrackers, createTracker, deleteTracker } from "../Api/Api";
+import { getTrackers, createTracker, deleteTracker, editTracker } from "../Api/Api";
 import { useEffect, useState } from "react";
 import TrackerForm from "../TrackerForm/TrackerForm";
 import { Table, Modal, Button, Alert } from "react-bootstrap";
@@ -52,13 +52,22 @@ const Tracker = () => {
   const onDeleteTracker = async () => {
     await deleteTracker(id, authorizedRequestConfig)
       .then((result) => {
-        setTrackers(trackers.filter((e) => e.id != id));
+        setTrackers(trackers.filter((tr) => tr.id != id));
       })
       .catch((e) => {
         setErrorMessage(e.response.data.ErrorMessage);
         setIsError(true);
       });
   };
+
+  const onEditTracker = async (editedTracker, trackerId) => {
+    await editTracker(trackerId, editedTracker, authorizedRequestConfig)
+      .catch((e) => {
+        setErrorMessage(e.response.data.ErrorMessage);
+        setIsError(true);
+      });
+  };
+
 
   let i = 1;
 
@@ -74,8 +83,10 @@ const Tracker = () => {
         <tbody>
           {trackers.map((tracker) => (
             <TrackerRow
+              key={tracker.id}
               rowNumber={i++}
               tracker={tracker}
+              onEdit={onEditTracker}
               showModal={showModal}
             />
           ))}

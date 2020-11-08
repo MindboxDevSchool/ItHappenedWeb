@@ -29,6 +29,18 @@ export const deleteTracker = (id, authorizedRequestConfig) =>
 export const getTracker = (trackerId, authorizedRequestConfig) =>
   instance.get(`/trackers/${trackerId}`, authorizedRequestConfig);
 
+export const editTracker = (
+  trackerId,
+  editedTrackerBody,
+  authorizedRequestConfig
+) => {
+  return instance.put(
+    `/trackers/${trackerId}`,
+    editedTrackerBody,
+    authorizedRequestConfig
+  );
+};
+
 export const getEvents = (trackerId, authorizedRequestConfig) =>
   instance.get(`/trackers/${trackerId}/events`, authorizedRequestConfig);
 
@@ -42,44 +54,17 @@ export const addEvent = (trackerId, eventBody, authorizedRequestConfig) =>
     authorizedRequestConfig
   );
 
-export const getFilteratedEvents = (trackerId, filterParams, authorizedRequestConfig) => {
-  console.log('API getFilteratedEvents');
-  console.log(filterParams);
-
-  let request_config = {};
-  request_config.params = filterParams;
-  request_config.headers = authorizedRequestConfig.headers;
-
-  console.log('request_config');
-  console.log(request_config);
-
-  return instance.get(
+export const getFilteration = (
+  trackerId,
+  filterParams,
+  authorizedRequestConfig
+) =>
+  instance.get(
     `/trackers/${trackerId}/events/filters`,
-     request_config
+    null,
+    filterParams,
+    authorizedRequestConfig
   );
-}
-
-
-// // `headers` are custom headers to be sent
-// headers: {'X-Requested-With': 'XMLHttpRequest'},
-
-// // `params` are the URL parameters to be sent with the request
-// // Must be a plain object or a URLSearchParams object
-// params: {
-//   ID: 12345
-// },
-
-// const authorizedRequestConfig = {
-//   headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-// };
-
-// var dict = []; // create an empty array
-
-// dict.push({
-//     key:   "keyName",
-//     value: "the value"
-// });
-
 
 export const deleteEvent = (eventId, authorizedRequestConfig) =>
   instance.delete(`events/${eventId}`, authorizedRequestConfig);
