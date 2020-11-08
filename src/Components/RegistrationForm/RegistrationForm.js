@@ -12,7 +12,7 @@ const reqdFieldMsg = "This is a required field";
 const invalidPwdMsg =
   "Password must contain atleast eight characters, at least one letter and one number.";
 const invalidLoginMsg =
-  "Login can contain alphanumeric characters (a-zA-Z0-9), only symbols: . - _ are allowed separated by alphanumeric";
+  "Username can contain alphanumeric characters (a-zA-Z0-9), only symbols: . - _ are allowed separated by alphanumeric. Minimum username length is 5 symbols";
 const schema = yup.object({
   login: yup
     .string()

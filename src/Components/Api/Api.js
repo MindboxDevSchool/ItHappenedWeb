@@ -29,11 +29,23 @@ export const deleteTracker = (id, authorizedRequestConfig) =>
 export const getTracker = (trackerId, authorizedRequestConfig) =>
   instance.get(`/trackers/${trackerId}`, authorizedRequestConfig);
 
+export const editTracker = (
+  trackerId,
+  editedTrackerBody,
+  authorizedRequestConfig
+) => {
+  return instance.put(
+    `/trackers/${trackerId}`,
+    editedTrackerBody,
+    authorizedRequestConfig
+  );
+};
+
 export const getEvents = (trackerId, authorizedRequestConfig) =>
   instance.get(`/trackers/${trackerId}/events`, authorizedRequestConfig);
 
 export const getEvent = (eventId, authorizedRequestConfig) =>
-instance.get(`/events/${eventId}/`, authorizedRequestConfig);  
+  instance.get(`/events/${eventId}/`, authorizedRequestConfig);
 
 export const addEvent = (trackerId, eventBody, authorizedRequestConfig) =>
   instance.post(
@@ -42,5 +54,17 @@ export const addEvent = (trackerId, eventBody, authorizedRequestConfig) =>
     authorizedRequestConfig
   );
 
-  export const deleteEvent = (eventId, authorizedRequestConfig) => 
+export const getFilteration = (
+  trackerId,
+  filterParams,
+  authorizedRequestConfig
+) =>
+  instance.get(
+    `/trackers/${trackerId}/events/filters`,
+    null,
+    filterParams,
+    authorizedRequestConfig
+  );
+
+export const deleteEvent = (eventId, authorizedRequestConfig) =>
   instance.delete(`events/${eventId}`, authorizedRequestConfig);
