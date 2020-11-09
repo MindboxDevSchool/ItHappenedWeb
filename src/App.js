@@ -68,7 +68,6 @@ function App() {
           <PrivateRoute path="/trackers" component={Tracker} />
           <Route path="/tracker/:trackerId" component={Events} />
           <Route path="/editor/:trackerId" component={TrackerEditor} />
-          <PrivateRoute path="/trackers" component={Tracker} />
           <Route path="/filtration/:trackerId" component={TrackerFiltration} />
           <Route path="/filtration" component={Filtration} />
         </Switch>
