@@ -75,12 +75,7 @@ const Tracker = () => {
         setIsError(true);
       });
   };
-    // var editedTrFromSet = trackers.filter(tr => tr.id == trackerId);
-    // var isTheSame = editedTrFromSet === editedTracker;
-    // setTrackers(trackers.filter((tr) => tr.id != trackerId));
-    // setTrackers([...trackers, editedTracker]);
-    // var newTrackers = trackers.map(tr => tr.id == trackerId ? editedTracker : tr);
-    // setTrackers(newTrackers);
+
   let i = 1;
 
   const showModal = (trackerId) => {
@@ -98,7 +93,6 @@ const Tracker = () => {
               key={tracker.id}
               rowNumber={i++}
               tracker={tracker}
-              onEdit={onEditTracker}
               showModal={showModal}
             />
           ))}
