@@ -65,17 +65,6 @@ const Tracker = () => {
       });
   };
 
-  const onEditTracker = async (editedTracker, trackerId) => {
-    await editTracker(trackerId, editedTracker, authorizedRequestConfig)
-      .then((result) => {
-        var t = result;
-      })
-      .catch((e) => {
-        setErrorMessage(e.response.data.ErrorMessage);
-        setIsError(true);
-      });
-  };
-
   let i = 1;
 
   const showModal = (trackerId) => {
