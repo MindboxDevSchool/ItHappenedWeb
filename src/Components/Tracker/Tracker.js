@@ -1,4 +1,9 @@
-import { getTrackers, createTracker, deleteTracker, editTracker } from "../Api/Api";
+import {
+  getTrackers,
+  createTracker,
+  deleteTracker,
+  editTracker,
+} from "../Api/Api";
 import { useEffect, useState } from "react";
 import TrackerForm from "../TrackerForm/TrackerForm";
 import { Table, Modal, Button, Alert } from "react-bootstrap";
@@ -24,7 +29,7 @@ const Tracker = () => {
       setIsError(false);
     }, 6000);
   };
-  
+
   useEffect(() => {
     const getTrackersAsync = async () => {
       await getTrackers(authorizedRequestConfig)
@@ -60,15 +65,6 @@ const Tracker = () => {
       });
   };
 
-  const onEditTracker = async (editedTracker, trackerId) => {
-    await editTracker(trackerId, editedTracker, authorizedRequestConfig)
-      .catch((e) => {
-        setErrorMessage(e.response.data.ErrorMessage);
-        setIsError(true);
-      });
-  };
-
-
   let i = 1;
 
   const showModal = (trackerId) => {
@@ -86,7 +82,6 @@ const Tracker = () => {
               key={tracker.id}
               rowNumber={i++}
               tracker={tracker}
-              onEdit={onEditTracker}
               showModal={showModal}
             />
           ))}

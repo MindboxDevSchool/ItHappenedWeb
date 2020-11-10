@@ -16,7 +16,7 @@ const TrackerForm = ({onAdd}) => {
   const [isScaleRequired, setScaleRequired] = useState(false);
   const [isPhotoRequired, setPhotoRequired] = useState(false);
   const [scaleMeasurementUnit, setScaleMeasurementUnit] = useState("");
-  
+    
   return <Form onSubmit=
             {e => {e.preventDefault(); onAdd(
               {"name": name, 
