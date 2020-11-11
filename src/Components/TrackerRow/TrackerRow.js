@@ -12,11 +12,6 @@ import {
   Alert,
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import comments from "./icons/comments.png";
-import photo from "./icons/photo.png";
-import rating from "./icons/rating.png";
-import scale from "./icons/scale.png";
-import location from "./icons/location.png";
 import { useState } from "react";
 import { Formik, Field } from "formik";
 import { editTracker } from "../../Components/Api/Api";

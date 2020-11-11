@@ -2,7 +2,6 @@ import {
   getTrackers,
   createTracker,
   deleteTracker,
-  editTracker,
 } from "../Api/Api";
 import { useEffect, useState } from "react";
 import TrackerForm from "../TrackerForm/TrackerForm";
@@ -35,7 +34,8 @@ const Tracker = () => {
       await getTrackers(authorizedRequestConfig)
         .then((result) => setTrackers(result.data))
         .catch((e) => {
-          setErrorMessage(e.response.data.ErrorMessage);
+          setErrorMessage(e.response.data.ErrorMessage ||
+            e.response.data.title + JSON.stringify(e.response.data.errors));
           setIsError(true);
         });
     };
@@ -49,7 +49,8 @@ const Tracker = () => {
         setTrackers([...trackers, trackerBody]);
       })
       .catch((e) => {
-        setErrorMessage(e.response.data.ErrorMessage);
+        setErrorMessage(e.response.data.ErrorMessage ||
+          e.response.data.title + JSON.stringify(e.response.data.errors));
         setIsError(true);
       });
   };
@@ -60,7 +61,8 @@ const Tracker = () => {
         setTrackers(trackers.filter((tr) => tr.id != id));
       })
       .catch((e) => {
-        setErrorMessage(e.response.data.ErrorMessage);
+        setErrorMessage(e.response.data.ErrorMessage ||
+          e.response.data.title + JSON.stringify(e.response.data.errors));
         setIsError(true);
       });
   };
