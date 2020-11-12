@@ -29,13 +29,13 @@ const DisplayCustomizationEditor = () => {
         </FormCheck>
       </div>
       <div>
-        <img src={comments} alt="comment" className="tableIcon" />
+        <img src={comments} alt="comments" className="tableIcon" />
         <FormCheck className="pl-1">
           <Field type="checkbox" name="isEditedTrackerCommentRequired"></Field>
         </FormCheck>
       </div>
       <div>
-        <img src={location} alt="geotag" className="tableIcon" />
+        <img src={location} alt="location" className="tableIcon" />
         <FormCheck className="pl-1">
           <Field type="checkbox" name="isEditedTrackerGeoTagRequired"></Field>
         </FormCheck>
