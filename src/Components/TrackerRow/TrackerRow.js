@@ -3,7 +3,6 @@ import changeIcon from "./icons/change.png";
 import "./TrackerRow.css";
 import {
   Form,
-  FormCheck,
   Button,
   FormControl,
   InputGroup,
@@ -13,7 +12,7 @@ import {
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import { Formik, Field } from "formik";
+import { Formik } from "formik";
 import { editTracker } from "../../Components/Api/Api";
 import DisplayActiveCustomizations from "./DisplayActiveCustomizations";
 import DisplayCustomizationEditor from "./DisplayCustomizationEditor";

@@ -11,31 +11,31 @@ const DisplayCustomizationEditor = () => {
   return (
     <>
       <div>
-        <img src={photo} className="tableIcon" />
+        <img src={photo} alt="photoImage" className="tableIcon" />
         <FormCheck className="pl-1">
-          <Field type="checkbox" name="isEditedTrackerPhotoRequired"></Field>
+          <Field type="checkbox" alt="checkbox" name="isEditedTrackerPhotoRequired"></Field>
         </FormCheck>
       </div>
       <div>
-        <img src={scale} className="tableIcon" />
+        <img src={scale} alt="scale" className="tableIcon" />
         <FormCheck className="pl-1">
           <Field type="checkbox" name="isEditedTrackerScaleRequired"></Field>
         </FormCheck>
       </div>
       <div>
-        <img src={rating} className="tableIcon" />
+        <img src={rating} alt="rating" className="tableIcon" />
         <FormCheck className="pl-1">
           <Field type="checkbox" name="isEditedTrackerRatingRequired"></Field>
         </FormCheck>
       </div>
       <div>
-        <img src={comments} className="tableIcon" />
+        <img src={comments} alt="comment" className="tableIcon" />
         <FormCheck className="pl-1">
           <Field type="checkbox" name="isEditedTrackerCommentRequired"></Field>
         </FormCheck>
       </div>
       <div>
-        <img src={location} className="tableIcon" />
+        <img src={location} alt="geotag" className="tableIcon" />
         <FormCheck className="pl-1">
           <Field type="checkbox" name="isEditedTrackerGeoTagRequired"></Field>
         </FormCheck>
