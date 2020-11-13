@@ -13,6 +13,7 @@ import Logout from "./Components/RegistrationForm/Logout";
 import { AuthContext } from "./Context/auth";
 import Filtration from "./Components/Filtration/Filtration";
 import TrackerFiltration from "./Components/Filtration/TrackerFiltration";
+import {updateRequestToken} from './Components/Api/Api';
 
 function App() {
   const [authToken, setAuthToken] = useState(localStorage.getItem("token"));
@@ -21,6 +22,7 @@ function App() {
   const setToken = (token) => {
     localStorage.setItem("token", token);
     setAuthToken(token);
+    updateRequestToken();
   };
 
   return (

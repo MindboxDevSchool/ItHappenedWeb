@@ -31,12 +31,8 @@ const TrackerRow = (props) => {
   const [errorMessage, setErrorMessage] = useState("");
   const [isEditOpen, setEditOpen] = useState(false);
 
-  const authorizedRequestConfig = {
-    headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-  };
-
   const onEditTracker = async (editedTracker, trackerId) => {
-    await editTracker(trackerId, editedTracker, authorizedRequestConfig)
+    await editTracker(trackerId, editedTracker)
       .then((result) => {
         if (result.status === 200) {
           setTrackerName(editedTracker.name);

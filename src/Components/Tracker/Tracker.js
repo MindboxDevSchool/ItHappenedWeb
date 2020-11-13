@@ -19,10 +19,6 @@ const Tracker = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const authorizedRequestConfig = {
-    headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-  };
-
   const closeErrorMessage = () => {
     setTimeout(() => {
       setIsError(false);
@@ -31,7 +27,7 @@ const Tracker = () => {
 
   useEffect(() => {
     const getTrackersAsync = async () => {
-      await getTrackers(authorizedRequestConfig)
+      await getTrackers()
         .then((result) => setTrackers(result.data))
         .catch((e) => {
           setErrorMessage(e.response.data.ErrorMessage ||
@@ -43,7 +39,7 @@ const Tracker = () => {
   }, []);
 
   const addTracker = async (trackerBody) => {
-    await createTracker(trackerBody, authorizedRequestConfig)
+    await createTracker(trackerBody)
       .then((result) => {
         trackerBody.id = result.data.id;
         setTrackers([...trackers, trackerBody]);
@@ -56,7 +52,7 @@ const Tracker = () => {
   };
 
   const onDeleteTracker = async () => {
-    await deleteTracker(id, authorizedRequestConfig)
+    await deleteTracker(id)
       .then((result) => {
         setTrackers(trackers.filter((tr) => tr.id != id));
       })

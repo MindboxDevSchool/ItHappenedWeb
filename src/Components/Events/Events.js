@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { deleteEvent, getEvent, getEvents, getTracker } from "../Api/Api";
+import { deleteEvent, getEvents, getTracker } from "../Api/Api";
 import { useEffect, useState } from "react";
 import EventForm from "../EventForm/EventForm";
 import { addEvent } from "../Api/Api";
@@ -7,9 +7,7 @@ import { Table, Modal, Button, Alert } from "react-bootstrap";
 import EventRow from "../EventRow/EventRow";
 
 const Events = () => {
-  const authorizedRequestConfig = {
-    headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-  };
+
 
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -31,7 +29,7 @@ const Events = () => {
 
   useEffect(() => {
     const getEventsAsync = async () => {
-      getEvents(trackerId, authorizedRequestConfig)
+      getEvents(trackerId)
         .then((result) => setEvents(result.data))
         .catch((e) => {
           setErrorMessage(e.response.data.ErrorMessage);
@@ -40,7 +38,7 @@ const Events = () => {
     };
 
     const getTrackerAsync = async () => {
-      getTracker(trackerId, authorizedRequestConfig)
+      getTracker(trackerId)
         .then((result) => {
           setTracker(result.data);
           setTrackerReceivedStatus(true);
@@ -57,7 +55,7 @@ const Events = () => {
 
   const onAddEvent = async (eventBody) => {
     console.log(eventBody);
-    await addEvent(trackerId, eventBody, authorizedRequestConfig)
+    await addEvent(trackerId, eventBody)
       .then((result) => {
         eventBody.id = result.data.id;
         setEvents([...events, eventBody]);
@@ -69,7 +67,7 @@ const Events = () => {
   };
 
   const onDeleteEvent = async () => {
-    await deleteEvent(eventId, authorizedRequestConfig)
+    await deleteEvent(eventId)
       .then((result) => {
         setEvents(events.filter((e) => e.id != eventId));
       })
